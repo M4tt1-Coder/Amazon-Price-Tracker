@@ -14,8 +14,8 @@ Please refer to the docs for more information about running the Django server [`
 
 ## Tasks for Everyone
 
-- frontend UI development
-  - display some charts (matplotlib)
-- API endpoints for fetching data from an Amazon API
-- convert / work with the incoming data -> filter out important data to us
+- frontend UI development (Matthis)
+  - display some charts (matplotlib) (Thomas)
+- API endpoints for fetching data from an Amazon API (Simon)
+- convert / work with the incoming data -> filter out important data to us (Jannis, Max)
 - store data (?)
