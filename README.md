@@ -12,4 +12,10 @@ You need to setup a virtual enviroment for the developing with Python and Django
 
 Please refer to the docs for more information about running the Django server [`here`](https://docs.djangoproject.com/en/5.1/intro/tutorial01/)
 
-## Test from Matthis
+## Tasks for Everyone
+
+- frontend UI development
+  - display some charts (matplotlib)
+- API endpoints for fetching data from an Amazon API
+- convert / work with the incoming data -> filter out important data to us
+- store data (?)
