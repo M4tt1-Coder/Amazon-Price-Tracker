@@ -3,6 +3,7 @@ import bs4 as bs
 import lxml
 import numpy as np
 import pandas as pd
+from datetime import datetime
 
 
 proxy_list=[]
@@ -38,9 +39,10 @@ if target_price_full:
     price_full = target_price_full.text
     price_fraction = target_price_fraction.text
     price = price_full + price_fraction
+    date = datetime.today().strftime("%d/%m/%Y")
 else:
     price = "suche des preises nicht erfolgreich"
-print(price)
+print(price,date)
 
 
 
