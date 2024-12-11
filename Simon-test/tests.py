@@ -1,16 +1,30 @@
 import requests
 import bs4 as bs
 import lxml
+import numpy as np
+import pandas as pd
 
+
+proxy_list=[]
+for line in open("proxies.txt","r"):
+    proxy_list.append(line.strip())
+
+random_proxy = proxy_list[np.random.randint(len(proxy_list))]
+print(proxy_list)
 Url = input("Enter URL: ")
-header = ({'User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0',
+used_proxy = {
+    "http":random_proxy,
+    "https":random_proxy,
+}
+header = ({'User-Agent':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0",
                     'Accept-Language':'en-US,en;q=0.5',
                     'Sec-Fetch-Dest':'document',
                     'Sec-Fetch-Mode':'navigate',
                     'Sec-Fetch-Site':'same-origin',
                     'Sec-Fetch-User':'?1',
                     'Upgrade-Insecure-Requests':'1'})
-scrap = requests.get(Url,headers=header)
+
+scrap = requests.get(url=Url,headers=header)
 inhalt=scrap.text
 print("scraping erfolgreich")
 
