@@ -11,7 +11,7 @@ for line in open("proxies.txt","r"):
     proxy_list.append(line.strip())
 
 random_proxy = proxy_list[np.random.randint(len(proxy_list))]
-print(proxy_list)
+#print(proxy_list)
 Url = input("Enter URL: ")
 used_proxy = {
     "http":random_proxy,
