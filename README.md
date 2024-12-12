@@ -34,3 +34,4 @@ Watch this [video](https://www.youtube.com/watch?v=nGIg40xs9e4) for a brief intr
 - API endpoints for fetching data from an Amazon API (Simon)
 - convert / work with the incoming data -> filter out important data to us (Jannis, Max)
 - store data (?)
+## Test
