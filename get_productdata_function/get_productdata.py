@@ -18,7 +18,7 @@ def get_data_np(Url):
 
     scrap = requests.get(url=Url, headers=header)
     inhalt = scrap.text
-    print("scraping erfolgreich")
+    #print("scraping erfolgreich")
 
     # try:
     inhalt_pars = bs.BeautifulSoup(inhalt, features="lxml")
@@ -46,7 +46,6 @@ def get_date_wp(Url):
 
     random_proxy = proxy_list[np.random.randint(len(proxy_list))]
     # print(proxy_list)
-    Url = input("Enter URL: ")
     used_proxy = {
         "http": random_proxy,
         "https": random_proxy,
@@ -61,7 +60,7 @@ def get_date_wp(Url):
         'Upgrade-Insecure-Requests': '1'})
     scrap = requests.get(url=Url, headers=header,proxies=used_proxy)
     inhalt = scrap.text
-    print("scraping erfolgreich")
+    #print("scraping erfolgreich")
 
     # try:
     inhalt_pars = bs.BeautifulSoup(inhalt, features="lxml")
