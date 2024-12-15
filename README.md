@@ -32,5 +32,5 @@ Watch this [video](https://www.youtube.com/watch?v=nGIg40xs9e4) for a brief intr
 - frontend UI development (Matthis)
   - display some charts (matplotlib) (Thomas)
 - API endpoints for fetching data from an Amazon API (Simon)
-- convert / work with the incoming data -> filter out important data to us (Jannis, Max)
-- store data (?)
+- convert / work with the incoming data -> filter out important data to us (Jannis, Max) -> store data in exel file
+- write simple html files (everyone) -> I will possibly assign some ideas to everyone
