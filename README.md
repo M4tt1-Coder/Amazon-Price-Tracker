@@ -41,7 +41,7 @@ The repo is now installed and ready to go but you need to install all Python pac
 
 #### Merge a branch into another
 
-To have your personal up-to-date with the `main`-branch you need to merge it into your own!
+To have your personal branch up-to-date with the `main`-branch you need to merge it into your own!
 
 First switch to the `main`-branch:
 ```bash
@@ -68,9 +68,9 @@ All important changes are now in the branch you work in!
 
 #### Create a Pull Request
 
-If you are ready with you features then you can create [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) to merge your changes into the default branch.
+If you are ready with you features, then you can create [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) to merge your changes into the default branch.
 
-On the first landing page there is a section called **`Pull requests`**:
+On the first landing page, there is a section called **`Pull requests`**:
 
 ![The main landing page](./readme_assets/pr_on_landing_page.png)
 
@@ -90,13 +90,13 @@ Click on `Create pull request` to continue!
 
 ![Select a branch to compare changes with](./readme_assets/create_pr_1.png)
 
-You will get to a new page, where you can add a title and description to your pull request! I recommend doing that because it allows your team members to understand why you did what you did!
+You will get to a new page, where you can add a title and description to your pull request! I recommend doing that, because it allows your team members to understand, why you did what you did!
 
 ![Add title and description to your pull request](./readme_assets//create_pr_2.png)
 
-After adding your text click on `Create pull request`!
+After adding your text, click on `Create pull request`!
 
-You will see something like this! Now you have created a new pull request and I will review the new pull request and possible merge into the main branch!
+You will see something like this! Now you have created a new pull request, I will review the new pull request and possibly merge it into the main branch!
 
 ![Summary of the pull request 1](./readme_assets/final_info_page.png)
 ![Summary of the pull request 2](./readme_assets/final_info_page-2.png)
