@@ -25,16 +25,19 @@ def get_data_np(Url):
     # print(inhalt_pars)
     target_price_full = inhalt_pars.find('span', attrs={'class': 'a-price-whole'})
     target_price_fraction = inhalt_pars.find('span', attrs={'class': 'a-price-fraction'})
+    target_product_name = inhalt_pars.find('span', attrs={"id":"productTitle",'class': 'a-size-large product-title-word-break'})
     price = 0
     if target_price_full:
         price_full = target_price_full.text
         price_fraction = target_price_fraction.text
+        product_name = target_product_name.text
         price = price_full + price_fraction
         date = datetime.today().strftime("%d/%m/%Y")
     else:
         price = "suche des preises nicht erfolgreich"
         date = None
-    return price,date
+        product_name = None
+    return price,date,product_name
 
 
 #this function uses proxies, maby usefull ich scraping normally ist not functioning.
