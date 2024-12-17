@@ -31,7 +31,7 @@ print("scraping erfolgreich")
 
 #try:
 inhalt_pars = bs.BeautifulSoup(inhalt, features="lxml")
-#print(inhalt_pars)
+print(inhalt_pars)
 target_price_full= inhalt_pars.find('span', attrs={'class':'a-price-whole'})
 target_price_fraction= inhalt_pars.find('span', attrs={'class':'a-price-fraction'})
 price = 0
@@ -42,6 +42,7 @@ if target_price_full:
     date = datetime.today().strftime("%d/%m/%Y")
 else:
     price = "suche des preises nicht erfolgreich"
+
 print(price,date)
 
 
