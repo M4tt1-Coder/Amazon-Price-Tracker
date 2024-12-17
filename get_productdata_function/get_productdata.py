@@ -16,18 +16,19 @@ def get_data_np(Url):
         'Sec-Fetch-User': '?1',
         'Upgrade-Insecure-Requests': '1'})
 
-    scrap = requests.get(url=Url, headers=header)
-    inhalt = scrap.text
+    scrap = requests.get(url=Url, headers=header)#sendet die anfrage an die Eingegebene Url und erhält den Vollständigen html quelltext
+    inhalt = scrap.text#wandelt den quelltext  in text um.
     #print("scraping erfolgreich")
 
     # try:
-    inhalt_pars = bs.BeautifulSoup(inhalt, features="lxml")
+    inhalt_pars = bs.BeautifulSoup(inhalt, features="lxml")#parsed den text in einen nutzbaren dataframe
     # print(inhalt_pars)
+    #Suchen in dem dataframe nach den spezifischen containern und speichern diese
     target_price_full = inhalt_pars.find('span', attrs={'class': 'a-price-whole'})
     target_price_fraction = inhalt_pars.find('span', attrs={'class': 'a-price-fraction'})
     target_product_name = inhalt_pars.find('span', attrs={"id":"productTitle",'class': 'a-size-large product-title-word-break'})
     price = 0
-    if target_price_full:
+    if target_price_full:#wenn die container gefunden wurden wird der inhalt mit .text aus ihnen herausgelesen
         price_full = target_price_full.text
         price_fraction = target_price_fraction.text
         product_name = target_product_name.text
@@ -40,7 +41,7 @@ def get_data_np(Url):
     return price,date,product_name
 
 
-#this function uses proxies, maby usefull ich scraping normally ist not functioning.
+#this function uses proxies, maby usefull if scraping normally ist not functioning.
 #But amazon does sometimes recognize these proxies to be malicious so try to use the other function first
 def get_date_wp(Url):
     proxy_list = []
