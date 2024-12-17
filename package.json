@@ -1,0 +1,14 @@
+{
+  "name": "amazon-arice-aracker",
+  "version": "1.0.0",
+  "description": "Styling for the Django Templates!",
+  "scripts": {
+    "watch:css": "pnpx tailwindcss -i ./amazon_price_tracker/static/src/styles.css -o ./amazon_price_tracker/static/dist/styles.css --watch"
+  },
+  "keywords": [],
+  "author": "Matthis Geißler",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.16"
+  }
+}
