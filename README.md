@@ -103,6 +103,56 @@ You will see something like this! Now you have created a new pull request, I wil
 
 ## How to run the app?
 
+### For frontend development
+
+You need to have `PNPM` installed on your system. Also make sure you have `NodeJS` installed on your system! 
+
+For checking, if you have it installed, type this into your terminal:
+
+```bash
+  node -v
+```
+... you should see something like this:
+> v23.4.0
+
+Please visit [this](https://nodejs.org/en/learn/getting-started/how-to-install-nodejs) website if you need to install `NodeJS`!
+
+#### PNPM 
+
+Install PNPM with this command, after you installed `NodeJS`:
+
+```bash
+  npm install -g pnpm
+```
+
+That will setup `PNPM` globally for you! Look at [this](https://pnpm.io/motivation) page to learn a bit about `PNPM`!
+
+Check to version of the version manager with: 
+
+```bash
+  pnpm -v
+```
+
+Now, head to the **`Amazon-Price-Tracker`** - folder and type:
+
+```bash
+  pnpm install
+```
+... in the terminal to install all needed node - packages locally!
+
+### Start Using TailwindCSS
+
+Now, you can take a look at the **`package.json`** - file! 
+
+Enter this command into the shell prompt in the **`Amazon-Price-Tracker`** - folder:
+
+```bash
+  pnpm watch:css
+```
+This will start the tailwind CLI and it will look for changes you made with classes in the HTML templates, and compile the new CSS classes accordingly. 
+
+Also, take a look at the the [TailwindCSS documentation](https://tailwindcss.com/docs/installation)! 
+
 ###  Running the Django Server
 
 Please refer to the docs for more information about running the Django server [`here`](https://docs.djangoproject.com/en/5.1/intro/tutorial01/)
