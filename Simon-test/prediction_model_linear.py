@@ -11,6 +11,7 @@ y_d= data["Price"]
 x=[]
 y=[]
 x_new=[]
+weigth =[]
 #wandelt die in x_d/x_y übergebenen tuples in arrays um
 for items in x_d:
     x.append(items)
@@ -20,13 +21,23 @@ for items in y_d:
 for items in x_d:
     x_new.append(items+len(x))
 x=np.array(x).reshape(-1,1)#convertiert den array in einen zweidimensionalen array
+
+#füllt einen array mit der gewichtung der einzelnen einträge in x. dabei soll der älteste eintrag die niedrigse und der neueste die höchste geiwchtung haben
+for i in range(0,len(x)):
+    weigth.append(i+1)
 x_new=np.array(x_new).reshape(-1,1)
 print(x_new)
 
 model = LinearRegression()#erstellt ein modell das nachher für die vorhersage benutzt wird
 
-model.fit(x,y)# passt das modell auf unser datenset an
+model.fit(x,y,sample_weight=weigth)# passt das modell auf unser datenset an
 
 prediction = model.predict(x_new) # multipliziert den wert den wir von unserem model als "steigung" bekommen und addiert einen wert der vom moddel als basiswert errechnet wurde
 
 print(prediction)
+
+dict_pred = {}
+for i in range(0,len(x_new)-1):
+    dict_pred[int(x_new[i][0])] = float(prediction[i])#typecast da numpy einen eigenen datentyp hat dessen name sonst mit ausgegeben wird
+
+print(dict_pred)
