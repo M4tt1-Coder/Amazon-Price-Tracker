@@ -42,6 +42,7 @@ if target_price_full:
     date = datetime.today().strftime("%d/%m/%Y")
 else:
     price = "suche des preises nicht erfolgreich"
+    date = 0
 
 print(price,date)
 
