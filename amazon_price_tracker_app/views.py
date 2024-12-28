@@ -5,3 +5,7 @@ from django.shortcuts import render, HttpResponse
 # our home page 
 def home(request):
     return render(request, 'home.html')
+
+
+def input(request):
+    return render(request, 'input.html')

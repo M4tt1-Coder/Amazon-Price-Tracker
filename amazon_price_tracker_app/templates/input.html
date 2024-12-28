@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add URL</title>
+</head>
+<body>
+<h1>Here you can add a Product to you tracker</h1>
+<div class="container">
+    <form action="{% url 'input' %}" method="post">
+        <label for="name">Product URL</label>
+        <input type="text" name="name" id="name" placeholder="Enter your Product URL">
+        <input type="submit" value="Submit">
+    </form>
+</div>
+</body>
+</html>
