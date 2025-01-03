@@ -1,11 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 {%block content%}
+
 <h1>Here you can add a Product to you tracker</h1>
 <div class="input">
-    <form action="/input" method="GET">
+    <form action="/input" method="POST">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit">
+        <input type="submit" value="delete">
     </form>
 </div>
 <div class="display">
