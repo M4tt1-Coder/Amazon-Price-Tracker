@@ -172,12 +172,33 @@ You should see something like this:
 
 Watch this [video](https://www.youtube.com/watch?v=nGIg40xs9e4) for a brief introduction into Django!
 
+### Linting all files
+
+Linting your files is important, it reformats your code according to the current standards. So, everybody can read your code!
+
+First, you have to install [`DjLint`](https://www.djlint.com/docs/getting-started/) in your virtual environment! It is a lightweight linter for HTML files.
+
+Run the following command to install it:
+
+```bash
+  pip install djlint
+```
+
+Now, to lint all Django Template files in the project, use the following command in a terminal in the **`Amazon-Price-Tracker`** - folder:
+
+```bash
+  pnpm lint
+```
+
+Also, open the `package.json` file to look at the corresponding script command!
+
 ## Tasks for Everyone
 
 - frontend UI development (Matthis)
+  - main page (Matthis)
+  - dashboard (Simon)
   - display some charts (matplotlib) (Thomas)
+  - design (Jannis)
 - API endpoints for fetching data from an Amazon API (Simon)
 - convert / work with the incoming data -> filter out important data to us (Jannis, Max) -> store data in exel file
 - write simple html files (everyone) -> I will possibly assign some ideas to everyone
-
-- link a tutorial for templating in Django
