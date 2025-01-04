@@ -127,7 +127,7 @@ Install PNPM with this command, after you installed `NodeJS`:
 
 That will setup `PNPM` globally for you! Look at [this](https://pnpm.io/motivation) page to learn a bit about `PNPM`!
 
-Check to version of the version manager with: 
+Check to version of the package manager with: 
 
 ```bash
   pnpm -v
