@@ -1,29 +1,82 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      {% block title %}
-        Django App
-      {% endblock %}
-    </title>
-    {% include 'head/css.html' %}
-    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" /> {% endcomment %}
-  </head>
-  <body>
-    <header class="h-20 w-full bg-slate-600 flex items-center justify-center">
-{% comment %} nav bar header conatainer  {% endcomment %}
-      <div class="w-4/5 h-full grid grid-rows-1 grid-cols-2">
-        {% comment %} App Title {% endcomment %}
-        <div class="cols-span-1 flex items-center justify-center"></div>
-        {% comment %} Navigation Information {% endcomment %}
-        <div class="cols-span-1"></div>
-      </div>
-    </header>
-    <div class="container">{% block content %} {% endblock %}</div>
-    {% comment %} <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" ></script> {% endcomment %}
-  </body>
-</html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block title %}Amazon Price Tracker{% endblock %}
+        </title>
+        {% include "head/css.html" %}
+        {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" /> {% endcomment %}
+    </head>
+    <body class="max-h-[100vh] max-w-[100vw]">
+        <header class="h-20 w-full bg-slate-300 sm:flex sm:items-center sm:justify-center border-b-4 border-b-black overflow-x-scroll p-2">
+            {% comment %} nav bar header conatainer  {% endcomment %}
+            <div class="min-w-[550px] w-full sm:w-4/5 h-full grid grid-rows-1 grid-cols-3 sm:grid-cols-2 gap-3">
+                {% comment %} App Title {% endcomment %}
+                <div class="col-span-2 sm:col-span-1 flex items-center justify-center transition-all duration-500 w-full h-full">
+                    <p class="font-semibold text-2xl md:text-4xl font-sans text-center hover:tracking-wide hover:scale-110 hover:text-slate-600 transition-all duration-700">
+                        Amazon Price Tracker
+                    </p>
+                </div>
+                {% comment %} Navigation Information {% endcomment %}
+                {% comment %} Here are navigation button and a-hrefs {% endcomment %}
+                <div class="col-span-1 flex items-center justify-center">
+                    <div class="w-full h-full flex items-center justify-center gap-7 ">
+                        <button type="button"
+                                class="p-2 text-xl font-sans ring-[2.5px] ring-black rounded-lg bg-white hover:ring-slate-300 hover:bg-black hover:text-white hover:scale-110 transition-all duration-700">
+                            <a href="{% url 'home' %}">Home</a>
+                        </button>
+                        {% comment %} <a href="{% url 'dashboard' %}">About</a> {% endcomment %}
+                        {% comment %} GitHub Profile {% endcomment %}
+                        <button class="rounded-full flex items-center justify-center aspect-square size-11 transition-all duration-700 hover:ring-offset-4 hover:ring-4 hover:ring-blue-700 hover:bg-white"
+                                type="button">
+                            <a class="" href="https://github.com/M4tt1-Coder/Amazon-Price-Tracker">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="currentColor"
+                                     class="aspect-square shrink-0 w-full transition-all duration-700 hover:rotate-[360deg] hover:text-blue-700"
+                                     aria-label="github solid"
+                                     viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M12.006 2a9.847 9.847 0 0 0-6.484 2.44 10.32 10.32 0 0 0-3.393 6.17 10.48 10.48 0 0 0 1.317 6.955 10.045 10.045 0 0 0 5.4 4.418c.504.095.683-.223.683-.494 0-.245-.01-1.052-.014-1.908-2.78.62-3.366-1.21-3.366-1.21a2.711 2.711 0 0 0-1.11-1.5c-.907-.637.07-.621.07-.621.317.044.62.163.885.346.266.183.487.426.647.71.135.253.318.476.538.655a2.079 2.079 0 0 0 2.37.196c.045-.52.27-1.006.635-1.37-2.219-.259-4.554-1.138-4.554-5.07a4.022 4.022 0 0 1 1.031-2.75 3.77 3.77 0 0 1 .096-2.713s.839-.275 2.749 1.05a9.26 9.26 0 0 1 5.004 0c1.906-1.325 2.74-1.05 2.74-1.05.37.858.406 1.828.101 2.713a4.017 4.017 0 0 1 1.029 2.75c0 3.939-2.339 4.805-4.564 5.058a2.471 2.471 0 0 1 .679 1.897c0 1.372-.012 2.477-.012 2.814 0 .272.18.592.687.492a10.05 10.05 0 0 0 5.388-4.421 10.473 10.473 0 0 0 1.313-6.948 10.32 10.32 0 0 0-3.39-6.165A9.847 9.847 0 0 0 12.007 2Z" clip-rule="evenodd">
+                                    </path>
+                                </svg>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            {% comment %} Main content container {% endcomment %}
+            <div class="w-full">
+                {% block content %}{% endblock %}
+            </div>
+            {% comment %} footer with general information about the contributers {% endcomment %}
+            <footer class="absolute bottom-0 left-0 w-screen h-[100px] max-w-[100vw] flex items-center justify-center p-4">
+                <div class="w-full h-full bg-slate-400 rounded-xl grid grid-rows-1 grid-cols-2 p-2">
+                    {% comment %} Rights reserved tag {% endcomment %}
+                    <div class="col-span-1 w-full h-full flex items-center justify-center">
+                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                           href="/"><span class="block text-sm sm:text-center text-black">© 2025 All Rights Reserved.</span></a>
+                    </div>
+                    {% comment %} contributers {% endcomment %}
+                    <div class="col-span-1 w-full h-full flex items-center justify-around gap-2 px-2 overflow-x-scroll">
+                        {% comment %} Max {% endcomment %}
+                        <a class="ml-2 hover:underline hover:tracking-wider transition-all duration-500"
+                           href="https://github.com/XEALAE"><span class="block text-sm sm:text-center text-black">Max</span></a>
+                        {% comment %} Jannis {% endcomment %}
+                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                           href="https://github.com/jannisg0509"><span class="block text-sm sm:text-center text-black">Jannis</span></a>
+                        {% comment %} Simon {% endcomment %}
+                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                           href="https://github.com/ToSi-stud"><span class="block text-sm sm:text-center text-black">Simon</span></a>
+                        {% comment %} Thomas {% endcomment %}
+                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                           href="https://github.com/Thomas-Weigl"><span class="block text-sm sm:text-center text-black">Thomas</span></a>
+                        {% comment %} Matthis {% endcomment %}
+                        <a class="mr-2 hover:underline hover:tracking-wider transition-all duration-500"
+                           href="https://github.com/M4tt1-Coder"><span class="block text-sm sm:text-center text-black">Matthis</span></a>
+                    </div>
+                </div>
+            </footer>
+        </body>
+    </html>
