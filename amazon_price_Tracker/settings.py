@@ -1,6 +1,5 @@
 # TODO - Begin to plan the pages and implement the views
-# TODO - Reimplement the static files and TailwindCSS -> "styles.css" doesn't reload after recompilation of tailwind
-# maybe change the folder structure -> no "dist/styles.css", is possibly ignored
+# TODO - make the pages responsive
 
 from pathlib import Path
 
