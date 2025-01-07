@@ -9,14 +9,14 @@ from django.conf import settings
 def home(request):
     return render(request, 'home.html')
 
-
+#page for adding and deleting product urls
 def input(request):
     data_file_path = os.path.join(#erstellt den absoluten pfad fer datei im djagno verzecihniss data/...
         settings.BASE_DIR,
         "amazon_price_tracker_app/data/urls.txt"
     )
     with open(data_file_path, "r") as txt:
-        data = txt.read()
+        data = txt.readlines()
     if request.method == "POST":
         form = urlform(request.POST)
         if form.is_valid():
@@ -34,7 +34,7 @@ def input(request):
                                 write.write(line)
                 return redirect("input")#update site to show new list
 
-
+#todo make the products be showed under each other not in a list
     else: form = urlform()
 
     return render(request, 'input.html',{"form":form,"products":data})
