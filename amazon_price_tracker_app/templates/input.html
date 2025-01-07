@@ -3,7 +3,7 @@
 {%block content%}
 
 <h1>Here you can add a Product to you tracker</h1>
-<div class="input">
+<div class="container mx-auto px-4 py-5">
     <form action="/input" method="POST">
         {% csrf_token %}
         {{ form }}
