@@ -6,5 +6,5 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path("input", views.input, name="input")
+    path("create", views.create, name="create")
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)#this is neccessary for implementing external files like css files etc.

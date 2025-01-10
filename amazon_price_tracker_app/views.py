@@ -10,7 +10,7 @@ def home(request):
     return render(request, 'home.html')
 
 #page for adding and deleting product urls
-def input(request):
+def create(request):
     data_file_path = os.path.join(#erstellt den absoluten pfad fer datei im djagno verzecihniss data/...
         settings.BASE_DIR,
         "amazon_price_tracker_app/data/urls.txt"
@@ -37,4 +37,4 @@ def input(request):
 #todo make the products be showed under each other not in a list
     else: form = urlform()
 
-    return render(request, 'input.html',{"form":form,"products":data})
+    return render(request, 'create.html',{"form":form,"products":data})
