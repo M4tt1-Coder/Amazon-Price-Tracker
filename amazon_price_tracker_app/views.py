@@ -24,7 +24,7 @@ def create(request):
             if request.POST.get("submit")=="submit":
                 with open(data_file_path, "a") as file:
                     file.write(url+"\n")
-                return redirect("input") #update site to show new list
+                return redirect("create") #update site to show new list
             elif request.POST.get("submit")=="delete":
                 with open(data_file_path, "r") as file:
                     lines=file.readlines()
@@ -32,7 +32,7 @@ def create(request):
                     for line in lines:
                             if line.strip("\n")!=url:
                                 write.write(line)
-                return redirect("input")#update site to show new list
+                return redirect("create")#update site to show new list
 
 #todo make the products be showed under each other not in a list
     else: form = urlform()
