@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Styling for the Django Templates!",
   "scripts": {
-    "watch:css": "pnpx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --watch"
+    "watch:css": "pnpx tailwindcss -i ./static/css/styles.css -o ./static/css/output.css --watch",
+    "lint": "djlint ./amazon_price_tracker_app/templates --profile=django --lint --reformat --warn"
   },
   "keywords": [],
   "author": "Matthis Geißler",
