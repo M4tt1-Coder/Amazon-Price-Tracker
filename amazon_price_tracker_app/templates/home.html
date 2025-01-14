@@ -1,50 +1,53 @@
 {% extends "base.html" %}
 {% block title %}
- Home Page
+    Home Page
 {% endblock title %}
 {% block content %}
- {% comment %} Main page for displaying all products and their prices {% endcomment %}
- <div class="w-full h-full grid grid-rows-1 grid-cols-2">
-  {% comment %} list content {% endcomment %}
-  <div class="col-span-1 h-full w-full flex items-center justify-center px-7">
-   <div class="w-full h-full grid grid-cols-1 grid-rows-7 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all duration-500 p-3">
-    {% comment %} list title {% endcomment %}
-    <div class="col-span-1 row-span-1 w-full h-full flex items-center justify-center">
-     <p class="w-full text-3xl font-medium font-sans text-center hover:scale-110 hover:font-semibold transition-all duration-500">
-      Products
-     </p>
+    {% comment %} Main page for displaying all products and their prices {% endcomment %}
+    <div class="w-full h-full grid grid-rows-1 grid-cols-2">
+        {% comment %} list content {% endcomment %}
+        <div class="col-span-1 h-full w-full flex items-center justify-center px-7">
+            <div class="w-full h-full grid grid-cols-1 grid-rows-7 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all duration-500 p-3">
+                {% comment %} list title {% endcomment %}
+                <div class="col-span-1 row-span-1 w-full h-full flex items-center justify-center">
+                    <p class="w-full text-3xl font-medium font-sans text-center hover:scale-110 hover:font-semibold transition-all duration-500">
+                        Products
+                    </p>
+                </div>
+                {% comment %} list of rendered products {% endcomment %}
+                <div class="row-span-6 col-span-1 overflow-y-scroll flex flex-col item-center justify-center gap-3">
+                    {% for product in products %}
+                        <div class="w-full h-fit p-2 flex item-center justify-between border-2 border-black rounded-lg bg-slate-300">
+                            {% comment %} Name of the product {% endcomment %}
+                            <p class="text-xl font-medium font-sans text-center hover:scale-110 transition-all duration-500">{{ product.name }}</p>
+                            {% comment %} Price of the Product {% endcomment %}
+                            <p class="text-xl font-medium font-sans text-center hover:scale-110 transition-all duration-500">
+                                {{ product.price }}€
+                            </p>
+                            {% comment %} Nav Button to Dashboard {% endcomment %}
+                            <button class="flex items-center justify-center" type="button">
+                                <a href="{% url 'dashboard' product_id=product.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 24 24"
+                                         stroke-width="2"
+                                         stroke="currentColor"
+                                         class="aspect-square size-6 text-black hover:stroke-[4px] hover:scale-110 hover:translate-x-1 transition-all duration-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                                    </svg>
+                                </a>
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% comment %} comparison container {% endcomment %}
+        <div class="col-span-1 h-full w-full flex items-center justify-center px-7">
+            <div class="w-full h-full flex flex-col items-center justify-center bg-slate-100 rounded-xl hover:bg-slate-200 transition-all duration-500 p-3">
+                <!-- TODO - A user should only be able to compare two and 3 at maximum -->
+                <!-- TODO - Included the loaded diagrams into the homepage -> https://spapas.github.io/2021/02/08/django-matplotlib/-->
+                {% for product_id in compared_product_ids %}{% endfor %}
+            </div>
+        </div>
     </div>
-    {% comment %} list of rendered products {% endcomment %}
-    <div class="row-span-6 col-span-1 overflow-y-scroll flex flex-col item-center justify-center gap-3">
-     {% for product in products %}
-      <div class="w-full h-fit p-2 flex item-center justify-between border-2 border-black rounded-lg bg-slate-300">
-       {% comment %} Name of the product {% endcomment %}
-       <p class="text-xl font-medium font-sans text-center hover:scale-110 transition-all duration-500">{{ product.name }}</p>
-       {% comment %} Price of the Product {% endcomment %}
-       <p class="text-xl font-medium font-sans text-center hover:scale-110 transition-all duration-500">
-        {{ product.price }}€
-       </p>
-       {% comment %} Nav Button to Dashboard {% endcomment %}
-       <button class="flex items-center justify-center" type="button">
-        <a href="{% url 'dashboard' product_id=product.id %}">
-         <svg xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              class="aspect-square size-6 text-black hover:stroke-[4px] hover:scale-110 hover:translate-x-1 transition-all duration-500">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-         </svg>
-        </a>
-       </button>
-      </div>
-     {% endfor %}
-    </div>
-   </div>
-  </div>
-  {% comment %} comparasion container {% endcomment %}
-  <div class="col-span-1 h-full w-full flex items-center justify-center px-7">
-   <div class="w-full h-full grid grid-cols-1 grid-rows-7 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all duration-500 p-3">
-   </div>
-  </div>
- </div>
 {% endblock content %}

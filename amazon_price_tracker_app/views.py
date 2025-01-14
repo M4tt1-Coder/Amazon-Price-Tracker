@@ -11,6 +11,11 @@ def home(request):
         comparison_product_ids = request.session['compared_products']
     else:
         request.session['compared_products'] = []
+    
+    # check if more than 3 products have been compared
+    # it is not allowed to compare more than 3 products
+    to_many_compareed_products = len(comparison_product_ids) > 3
+    
     # Mock data for dashboard page
     # mock data test data
     mock_products = [
@@ -24,16 +29,25 @@ def home(request):
     ]
     context = {
         'products': mock_products,
-        'compared_product_ids': comparison_product_ids
+        'compared_product_ids': comparison_product_ids,
+        'to_many_compareed_products': to_many_compareed_products
     }
     return render(request, 'home.html', context)
 
 # TODO - Finish the dashboard page
+    
 def dashboard(request, product_id):
+    """
+        Entrypoint for the dashboard page.
+        
+        Args:
+            request: The HTTP request object.
+            product_id: The ID of the product to be included in the dashboard.
+    """
     # TODO - Include // Finish the 'get_product' function
     # product = get_product(product_id)
-    product = {'id': 4, 'name': 'Product 4', 'description': 'Some Product 4', 'price': 345.99}
+    mock_product = {'id': 4, 'name': 'Product 4', 'description': 'Some Product 4', 'price': 345.99}
     context = {
-        'product': product
+        'product': mock_product
     }
     return render(request, 'dashboard.html', context)
