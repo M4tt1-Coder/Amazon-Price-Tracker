@@ -588,6 +588,10 @@ video {
   }
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .static {
   position: static;
 }
@@ -660,6 +664,10 @@ video {
 
 .max-h-\[100vh\] {
   max-height: 100vh;
+}
+
+.w-auto {
+  width: auto;
 }
 
 .w-full {

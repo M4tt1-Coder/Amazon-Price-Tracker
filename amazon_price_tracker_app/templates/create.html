@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {%block content%}
+{% block scripts %}
+<script>
+  function CopyText(clicked_id) {
+  var text = document.getElementById(clicked_id);
+  text.select();
+  document.execCommand('copy')
+}
+</script>
+{% endblock scripts %}
 
 <h1>Here you can add a Product to you tracker</h1>
 <div class="container mx-auto px-4 py-5">
@@ -11,9 +20,10 @@
         <input type="submit" name = "submit" value="delete" class=" px-4 py-3 rounded bg-blue-500 cursor-pointer hover:bg-sky-800 text-white ">
     </form>
 </div>
-<div class="display">
-    <p>Your Product URLs:</p>
-    <p>{{products}}</p>
+<div class="w-full mx-auto">
+    {% for item in products %}
+    <li><span type="button" contenteditable="true" title="{{item}}"  id="span" class="w-auto" ><input type="text" title="{{item}}" value="{{item}}"  id="{{item}}" class="w-full" onclick="CopyText(id)"></span></li>
+    {%endfor%}
 </div>
 
 {% endblock %}
