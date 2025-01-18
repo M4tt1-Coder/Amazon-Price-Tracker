@@ -4,14 +4,20 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description"
+              content="Amazon Price Tracker - Monitor and track the prices of products on Amazon." />
+        <meta name="keywords"
+              content="Amazon, Price Tracker, Monitor, Product Prices" />
         <title>
-            {% block title %}Amazon Price Tracker{% endblock %}
+            {% block title %}
+                Amazon Price Tracker
+            {% endblock title %}
         </title>
         {% include "head/css.html" %}
         {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" /> {% endcomment %}
     </head>
     <body class="max-h-[100vh] max-w-[100vw]">
-        <header class="h-20 w-full bg-slate-300 sm:flex sm:items-center sm:justify-center border-b-4 border-b-black overflow-x-scroll p-2">
+        <header class="h-20 w-full bg-slate-300 sm:flex sm:items-center sm:justify-center border-b-4 border-b-black overflow-x-scroll p-2 mb-3.5">
             {% comment %} nav bar header conatainer  {% endcomment %}
             <div class="min-w-[550px] w-full sm:w-4/5 h-full grid grid-rows-1 grid-cols-3 sm:grid-cols-2 gap-3">
                 {% comment %} App Title {% endcomment %}
@@ -36,7 +42,7 @@
                         </button>
                         <button class="rounded-full flex items-center justify-center aspect-square size-11 transition-all duration-700 hover:ring-offset-4 hover:ring-4 hover:ring-blue-700 hover:bg-white"
                                 type="button">
-                            <a class="" href="https://github.com/M4tt1-Coder/Amazon-Price-Tracker">
+                            <a href="https://github.com/M4tt1-Coder/Amazon-Price-Tracker">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      fill="currentColor"
                                      class="aspect-square shrink-0 w-full transition-all duration-700 hover:rotate-[360deg] hover:text-blue-700"
@@ -49,38 +55,41 @@
                         </button>
                     </div>
                 </div>
-            </header>
-            {% comment %} Main content container {% endcomment %}
-            <div class="w-full">
-                {% block content %}{% endblock %}
             </div>
-            {% comment %} footer with general information about the contributers {% endcomment %}
-            <footer class="absolute bottom-0 left-0 w-screen h-[100px] max-w-[100vw] flex items-center justify-center p-4">
-                <div class="w-full h-full bg-slate-400 rounded-xl grid grid-rows-1 grid-cols-2 p-2">
-                    {% comment %} Rights reserved tag {% endcomment %}
-                    <div class="col-span-1 w-full h-full flex items-center justify-center">
-                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
-                           href="/"><span class="block text-sm sm:text-center text-black">© 2025 All Rights Reserved.</span></a>
-                    </div>
-                    {% comment %} contributers {% endcomment %}
-                    <div class="col-span-1 w-full h-full flex items-center justify-around gap-2 px-2 overflow-x-scroll">
-                        {% comment %} Max {% endcomment %}
-                        <a class="ml-2 hover:underline hover:tracking-wider transition-all duration-500"
-                           href="https://github.com/XEALAE"><span class="block text-sm sm:text-center text-black">Max</span></a>
-                        {% comment %} Jannis {% endcomment %}
-                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
-                           href="https://github.com/jannisg0509"><span class="block text-sm sm:text-center text-black">Jannis</span></a>
-                        {% comment %} Simon {% endcomment %}
-                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
-                           href="https://github.com/ToSi-stud"><span class="block text-sm sm:text-center text-black">Simon</span></a>
-                        {% comment %} Thomas {% endcomment %}
-                        <a class="hover:underline hover:tracking-wider transition-all duration-500"
-                           href="https://github.com/Thomas-Weigl"><span class="block text-sm sm:text-center text-black">Thomas</span></a>
-                        {% comment %} Matthis {% endcomment %}
-                        <a class="mr-2 hover:underline hover:tracking-wider transition-all duration-500"
-                           href="https://github.com/M4tt1-Coder"><span class="block text-sm sm:text-center text-black">Matthis</span></a>
-                    </div>
+        </header>
+        {% comment %} Main content container {% endcomment %}
+        <div class="px-3 w-full h-[calc(100vh-192px)]">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        {% comment %} footer with general information about the contributers {% endcomment %}
+        <footer class="absolute bottom-0 left-0 w-screen h-[100px] max-w-[100vw] flex items-center justify-center p-4">
+            <div class="w-full h-full bg-slate-400 rounded-xl grid grid-rows-1 grid-cols-2 p-2">
+                {% comment %} Rights reserved tag {% endcomment %}
+                <div class="col-span-1 w-full h-full flex items-center justify-center">
+                    <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                       href="{% url 'home' %}"><span class="block text-sm sm:text-center text-black">© 2025 All Rights Reserved.</span></a>
                 </div>
-            </footer>
-        </body>
-    </html>
+                {% comment %} contributers {% endcomment %}
+                <div class="col-span-1 w-full h-full flex items-center justify-around gap-2 px-2 overflow-x-scroll">
+                    {% comment %} Max {% endcomment %}
+                    <a class="ml-2 hover:underline hover:tracking-wider transition-all duration-500"
+                       href="https://github.com/XEALAE"><span class="block text-sm sm:text-center text-black">Max</span></a>
+                    {% comment %} Jannis {% endcomment %}
+                    <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                       -
+                       href="https://github.com/jannisg0509"><span class="block text-sm sm:text-center text-black">Jannis</span></a>
+                    {% comment %} Simon {% endcomment %}
+                    <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                       href="https://github.com/ToSi-stud"><span class="block text-sm sm:text-center text-black">Simon</span></a>
+                    {% comment %} Thomas {% endcomment %}
+                    <a class="hover:underline hover:tracking-wider transition-all duration-500"
+                       href="https://github.com/Thomas-Weigl"><span class="block text-sm sm:text-center text-black">Thomas</span></a>
+                    {% comment %} Matthis {% endcomment %}
+                    <a class="mr-2 hover:underline hover:tracking-wider transition-all duration-500"
+                       href="https://github.com/M4tt1-Coder"><span class="block text-sm sm:text-center text-black">Matthis</span></a>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
