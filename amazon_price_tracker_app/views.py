@@ -51,7 +51,9 @@ def home(request):
 
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
-    to_many_compareed_products = len(comparison_product_ids) > 3
+    to_many_compared_products = len(comparison_product_ids) > 3
+
+        
 
     # Mock data for dashboard page
     # mock data test data
@@ -99,10 +101,26 @@ def home(request):
             "price": 7.49,
         },
     ]
+
+    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.)
+    # products that are not compared
+    product_not_selected = []
+    # products = getProducts()
+    # get the products that the user wants to compare
+    products_to_compare = []
+    for product in mock_products:
+        for product_id in comparison_product_ids:
+            if product['id'] == product_id:
+                products_to_compare.append(product)
+                break  # stop searching if the product is found to avoid duplicates
+        product_not_selected.append(product)
+        
+    # set page context
     context = {
+        "products_not_selected": product_not_selected,
         "products": mock_products,
-        "compared_product_ids": comparison_product_ids,
-        "to_many_compareed_products": to_many_compareed_products,
+        "compared_products": products_to_compare,
+        "to_many_compared_products": to_many_compared_products,
     }
     return render(request, "home.html", context)
 
