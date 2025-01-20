@@ -192,6 +192,18 @@ Now, to lint all Django Template files in the project, use the following command
 
 Also, open the `package.json` file to look at the corresponding script command!
 
+### Update all dependencies in virtual environment
+
+After some time, you need to update all dependencies in your virtual environment!
+
+Enter this command, after you activated your virtual environment:
+
+```bash
+  pip freeze --local | grep -v '^\\-e' | cut -d = -f 1 | xargs -n1 pip install -U
+```
+
+`PIP` will install all new versions of updated dependencies.
+
 ## Tasks for Everyone
 
 - frontend UI development (Matthis)
