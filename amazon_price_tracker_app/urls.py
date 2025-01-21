@@ -8,4 +8,3 @@ urlpatterns = [
     path("create", views.create, name="create"),
     path('dashboard/<str:product_id>/', views.dashboard, name="dashboard"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)#this is neccessary for implementing external files like css files etc.
-
