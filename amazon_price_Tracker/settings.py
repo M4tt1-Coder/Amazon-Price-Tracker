@@ -1,4 +1,3 @@
-# TODO - Begin to plan the pages and implement the views
 # TODO - make the pages responsive
 
 from pathlib import Path
