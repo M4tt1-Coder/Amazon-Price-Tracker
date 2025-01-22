@@ -103,6 +103,86 @@ You will see something like this! Now you have created a new pull request, I wil
 
 ## How to run the app?
 
+Please refer [here](https://git-scm.com/downloads) if you haven't installed it already!
+
+To check if you it setup on your PC:
+```bash
+  git -v
+```
+... output should be:
+> git version 2.47.1
+
+After making sure you have `Git` installed, you can pull the repository to a folder of your liking. Open a terminal in that directory and enter the following command into your command line:
+```bash
+  git clone https://github.com/M4tt1-Coder/Amazon-Price-Tracker.git
+```
+
+The repo is now installed and ready to go but you need to install all Python packages to start developing.
+
+#### Merge a branch into another
+
+To have your personal branch up-to-date with the `main`-branch you need to merge it into your own!
+
+First switch to the `main`-branch:
+```bash
+  git checkout main
+```
+Then pull possible commits from the remote branch:
+
+```bash
+  git pull
+```
+Now, switch back to your branch:
+
+```bash
+  git checkout <nameOfYourBranch>
+```
+... merge the changes made in `main` into yours:
+
+```bash
+  git merge main
+```
+There is a chances that you encounter a merge conflict. In that case please visit [this](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line) site to learn more how to resolve the problem!
+
+All important changes are now in the branch you work in!
+
+#### Create a Pull Request
+
+If you are ready with you features, then you can create [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) to merge your changes into the default branch.
+
+On the first landing page, there is a section called **`Pull requests`**:
+
+![The main landing page](./readme_assets/pr_on_landing_page.png)
+
+Click on the tag `Pull requests`!
+
+Now you get to a page, where all open pull requests are listed!
+
+![All listed pull requests & create new pull requests](./readme_assets/new_pr.png)
+
+Next, click on the button `New pull request`!
+
+![Choose a branch where to merge from](./readme_assets/choose_branch.png)
+
+So, here you need to select a branch to compare changes with! Click on the same button / field as marked in the image!
+
+Click on `Create pull request` to continue!
+
+![Select a branch to compare changes with](./readme_assets/create_pr_1.png)
+
+You will get to a new page, where you can add a title and description to your pull request! I recommend doing that, because it allows your team members to understand, why you did what you did!
+
+![Add title and description to your pull request](./readme_assets//create_pr_2.png)
+
+After adding your text, click on `Create pull request`!
+
+You will see something like this! Now you have created a new pull request, I will review the new pull request and possibly merge it into the main branch!
+
+![Summary of the pull request 1](./readme_assets/final_info_page.png)
+![Summary of the pull request 2](./readme_assets/final_info_page-2.png)
+
+## How to run the app?
+
 ### For frontend development
 
 You need to have `PNPM` installed on your system. Also make sure you have `NodeJS` installed on your system! 
@@ -153,6 +233,7 @@ This will start the tailwind CLI and it will look for changes you made with clas
 
 Also, take a look at the the [TailwindCSS documentation](https://tailwindcss.com/docs/installation)! 
 
+
 ###  Running the Django Server
 
 Please refer to the docs for more information about running the Django server [`here`](https://docs.djangoproject.com/en/5.1/intro/tutorial01/)
@@ -192,6 +273,18 @@ Now, to lint all Django Template files in the project, use the following command
 
 Also, open the `package.json` file to look at the corresponding script command!
 
+### Update all dependencies in virtual environment
+
+After some time, you need to update all dependencies in your virtual environment!
+
+Enter this command, after you activated your virtual environment:
+
+```bash
+  pip freeze --local | grep -v '^\\-e' | cut -d = -f 1 | xargs -n1 pip install -U
+```
+
+`PIP` will install all new versions of updated dependencies.
+
 ## Tasks for Everyone
 
 - frontend UI development (Matthis)
@@ -199,6 +292,6 @@ Also, open the `package.json` file to look at the corresponding script command!
   - dashboard (Simon)
   - display some charts (matplotlib) (Thomas)
   - design (Jannis)
+  - view endpoint functions (sascha)
 - API endpoints for fetching data from an Amazon API (Simon)
 - convert / work with the incoming data -> filter out important data to us (Jannis, Max) -> store data in exel file
-- write simple html files (everyone) -> I will possibly assign some ideas to everyone

@@ -13,6 +13,8 @@
                 Amazon Price Tracker
             {% endblock title %}
         </title>
+        {% block header_scripts %}
+        {% endblock header_scripts %}
         {% include "head/css.html" %}
         {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" /> {% endcomment %}
     </head>
@@ -36,6 +38,10 @@
                         </button>
                         {% comment %} <a href="{% url 'dashboard' %}">About</a> {% endcomment %}
                         {% comment %} GitHub Profile {% endcomment %}
+                        <button type="button"
+                                class="p-2 text-xl font-sans ring-[2.5px] ring-black rounded-lg bg-white hover:ring-slate-300 hover:bg-black hover:text-white hover:scale-110 transition-all duration-700">
+                            <a href="{% url 'create' %}">Edit URLs</a>
+                        </button>
                         <button class="rounded-full flex items-center justify-center aspect-square size-11 transition-all duration-700 hover:ring-offset-4 hover:ring-4 hover:ring-blue-700 hover:bg-white"
                                 type="button">
                             <a href="https://github.com/M4tt1-Coder/Amazon-Price-Tracker">
