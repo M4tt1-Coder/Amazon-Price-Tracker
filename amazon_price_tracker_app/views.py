@@ -32,7 +32,7 @@ def create(request):
                                 write.write(line)
                 return redirect("create")#update site to show new list
 
-#todo make the products be showed under each other not in a list
+
     else: form = urlform()
 
     return render(request, 'create.html',{"form":form,"products":data})
