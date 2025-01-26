@@ -2,6 +2,7 @@ import pandas as pd
 from random import random
 import hashlib
 import os
+from get_productdata import get_data_np
 
 # function for testing
 #def get_data_np():
@@ -10,15 +11,15 @@ import os
 #    product = f"Product_{int(random() * 3)}"  # random product name (3 products for simulation)
 #    return price, date, product
 
-def receive_data_np():
+def receive_data_np(url,file):
     # declare variables for the return values of 'get_data_np()'
-    price, date, product = get_data_np()
+    price, date, product = get_data_np(url)
     
     # hash 'product' variable
     hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
     
     # declare excel file name 
-    file_name = 'amazon_product_data.xlsx'
+    file_name = file
     
     # check if excel 'amazon_product_data.xlsx' in variable 'file_name' exists
     file_exists = os.path.exists(file_name)

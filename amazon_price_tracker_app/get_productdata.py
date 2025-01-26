@@ -45,7 +45,7 @@ def get_data_np(Url):
 #But amazon does sometimes recognize these proxies to be malicious so try to use the other function first
 def get_date_wp(Url):
     proxy_list = []
-    for line in open("proxies.txt", "r"):
+    for line in open("../get_productdata_function/proxies.txt", "r"):
         proxy_list.append(line.strip())
 
     random_proxy = proxy_list[np.random.randint(len(proxy_list))]
