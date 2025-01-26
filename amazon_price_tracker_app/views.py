@@ -43,6 +43,9 @@ def create(request):
 def home(request):
     # store comparison information in session -> https://docs.djangoproject.com/en/5.1/topics/http/sessions/
     # TODO - Add the comparison feature
+    # TODO - Add the functionality to add products to comparison list
+    # TODO - Add the functionality to remove products from comparison list
+
     comparison_product_ids = []
     if "compared_products" in request.session:
         comparison_product_ids = request.session["compared_products"]
@@ -52,8 +55,6 @@ def home(request):
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
-
-        
 
     # Mock data for dashboard page
     # mock data test data
@@ -126,8 +127,6 @@ def home(request):
 
 
 # TODO - Finish the dashboard page
-
-
 def dashboard(request, product_id):
     """
     Entrypoint for the dashboard page.
