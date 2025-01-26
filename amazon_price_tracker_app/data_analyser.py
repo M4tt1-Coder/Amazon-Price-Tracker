@@ -2,7 +2,7 @@ import pandas as pd
 from random import random
 import hashlib
 import os
-from get_productdata import get_data_np
+from .get_productdata import get_data_np
 
 # function for testing
 #def get_data_np():

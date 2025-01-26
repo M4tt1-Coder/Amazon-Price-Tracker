@@ -1,5 +1,1 @@
-https://www.amazon.de/test
-https://www.amazon.de/test3
-https://www.amazon.de/
-https://www.amazon.de/ljdkgfkse
-https://www.amazon.de/test4
+https://fakestoreapi.com/products/1

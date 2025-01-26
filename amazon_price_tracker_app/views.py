@@ -1,7 +1,8 @@
 import openpyxl
 import pandas as pd
 import hashlib
-from get_productdata import get_data_np
+from .get_productdata import *
+from .data_analyser import *
 from django.shortcuts import render, redirect
 
 from openpyxl import load_workbook
@@ -26,11 +27,16 @@ def create(request):
             url = form.cleaned_data["user_input"]
             price, date, product = get_data_np(url)
             hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
-            if request.POST.get("submit") == "submit":
+
+
+            if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
                 with open(data_file_path, "a") as file:
                     file.write(url + "\n")
+                receive_data_np(url, excel_file_path)
                 return redirect("create")  # update site to show new list
-            elif request.POST.get("submit") == "delete":
+
+
+            elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
                 with open(data_file_path, "r") as file:
                     lines = file.readlines()
                 with open(data_file_path, "w") as write:
