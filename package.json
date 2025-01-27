@@ -1,14 +1,20 @@
 {
-  "name": "amazon-arice-aracker",
+  "name": "amazon-price-tracker",
   "version": "1.0.0",
   "description": "Styling for the Django Templates!",
   "scripts": {
-    "watch:css": "pnpx tailwindcss -i ./amazon_price_tracker/static/src/styles.css -o ./amazon_price_tracker/static/dist/styles.css --watch"
+    "watch:css": "pnpx @tailwindcss/cli -i ./static/css/styles.css -o ./static/css/output.css --watch",
+    "lint": "djlint ./amazon_price_tracker_app/templates --profile=django --lint --reformat --warn"
   },
   "keywords": [],
   "author": "Matthis Geißler",
   "license": "MIT",
   "devDependencies": {
-    "tailwindcss": "^3.4.17"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.0"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.0"
   }
 }
