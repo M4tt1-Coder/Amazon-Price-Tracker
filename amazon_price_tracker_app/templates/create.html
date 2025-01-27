@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <h1>Here you can add a Product to you tracker</h1>
-    <div class="container mx-auto px-4 py-5">
-        <form action="{% url 'create' %}" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit"
-                   name="submit"
-                   value="submit"
-                   class=" px-4 py-3 rounded bg-blue-500 cursor-pointer hover:bg-sky-800 text-white">
-            <input type="submit"
-                   name="submit"
-                   value="delete"
-                   class=" px-4 py-3 rounded bg-blue-500 cursor-pointer hover:bg-sky-800 text-white ">
-        </form>
-    </div>
-    <div class="display">
-        <p>Your Product URLs:</p>
-        <p>{{ products }}</p>
+    <div class="w-full bg-gray-200 rounded-lg">
+        <h1 class = "text-center font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">Here you can add a Product to you tracker</h1>
+        <div class="container mx-auto px-4 py-5">
+            <div class = "w-full flex items-center justify-center gap-4">
+                <form action="{% url 'create' %}" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                        <input type="submit"
+                            name="submit"
+                            value="submit"
+                            class="p-2 bg-black text-xl font-medium text-white rounded-xl transition-all duration-500 hover:bg-white hover:text-black hover:scale-105 hover:ring-2 hover:ring-black">
+                        <input type="submit"
+                            name="submit"
+                            value="delete"
+                            class="p-2 bg-black text-xl font-medium text-white rounded-xl transition-all duration-500 hover:bg-white hover:text-black hover:scale-105 hover:ring-2 hover:ring-black">
+                </form>
+            </div>
+        </div>
+        <div class="display w-full rounded">
+            <p class ="text-black text-center font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">Your Product URLs:</p>
+            <p>{{ products }}</p>
+        </div>
     </div>
 {% endblock content %}
