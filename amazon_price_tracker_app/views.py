@@ -44,9 +44,10 @@ def create(request):
                         if line.strip("\n") != url:
                             write.write(line)
             #todo delete sheet from excel
-                with openpyxl.load_workbook(excel_file_path) as excel:
-                    excel.remove(hash)
-
+                wb = load_workbook(excel_file_path)
+                print(f"---------------------------------------------{wb}----------------------------------------")
+                wb.remove(wb[hash])
+                wb.save(excel_file_path)
                 return redirect("create")  # update site to show new list
 
 
