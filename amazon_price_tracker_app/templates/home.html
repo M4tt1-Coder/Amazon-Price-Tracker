@@ -64,38 +64,43 @@
                     </div>
                 </div>
                 <div class="h-full w-full row-span-6 col-span-1 grid grid-cols-1 grid-rows-3 px-2">
-                    <!-- TODO - Add alert statement for too many selected product -->
-                    <!-- TODO - Included the loaded diagrams into the homepage -> https://spapas.github.io/2021/02/08/django-matplotlib/-->
-                    <div class="col-span-1 row-span-1 w-full h-full grid grid-cols-1 grid-rows-4 gap-3 p-2 rounded-xl bg-slate-300 ring-">
-                        {% comment %} Product name and 'unselect' button {% endcomment %}
-                        <div class="col-span-1 row-span-1 flex items-center justify-between">
-                            {% comment %} product name  {% endcomment %}
-                            <p class="w-full text-xl font-medium font-sans hover:translate-x-1 hover:tracking-wider origin-center transition-all duration-500">
-                                {{ product.name }} Some longer name then normally
-                            </p>
-                            {% comment %} unselect button {% endcomment %}
-                            <button type="button"
-                                    class="aspect-square  size-10 font-medium rounded-xl p-2 bg-black text-white hover:bg-white hover:ring-2 hover:ring-black hover:ring-offset-2 transition-all duration-500">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 24 24"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     class="w-full h-full aspect-square hover:stroke-[2px] hover:scale-105 hover:text-red-400 transition-all duration-500">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                            </button>
+                    {% for product in compared_products %}
+                        <!-- TODO - Add alert statement for too many selected product -->
+                        <!-- TODO - Included the loaded diagrams into the homepage -> https://spapas.github.io/2021/02/08/django-matplotlib/-->
+                        <div class="col-span-1 row-span-1 w-full h-full grid grid-cols-1 grid-rows-4 gap-3 p-2 rounded-xl bg-slate-300 ring-">
+                            {% comment %} Product name and 'unselect' button {% endcomment %}
+                            <form method="post"
+                                  action="{% url 'home' %}"
+                                  class="col-span-1 row-span-1 flex items-center justify-between">
+                                {% csrf_token %}
+                                {% comment %} {{ cmp_form }} {% endcomment %}
+                                {% comment %} product name  {% endcomment %}
+                                <p class="w-full text-xl font-medium font-sans hover:translate-x-1 hover:tracking-wider origin-center transition-all duration-500">
+                                    {{ product.name }}
+                                </p>
+                                {% comment %} unselect button {% endcomment %}
+                                <button type="submit"
+                                        class="aspect-square size-10 font-medium rounded-xl p-2 bg-black text-white hover:bg-white hover:ring-2 hover:ring-black hover:ring-offset-2 transition-all duration-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         class="w-full h-full aspect-square hover:stroke-[2px] hover:scale-105 hover:text-red-400 transition-all duration-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>
+                                </button>
+                                <input type="hidden" value="{{ product.id }}|DELETE" name="action_operation" />
+                            </form>
+                            {% comment %} product price chart {% endcomment %}
+                            <div class="col-span-1 row-span-3">
+                                <!-- TODO - Replace this with the actual chart -->
+                            </div>
                         </div>
-                        {% comment %} product price chart {% endcomment %}
-                        <div class="col-span-1 row-span-3">
-                            <!-- TODO - Replace this with the actual chart -->
-                        </div>
-                    </div>
-                    {% for product in compared_products %}{% endfor %}
+                    {% endfor %}
                 </div>
             </div>
         </div>
         {% comment %} selection popover {% endcomment %}
-        <!-- TODO - Add the product selection container -->
         <div id="cmpPopupContainer"
              class="hidden z-50 absolute top-0 left-0 w-screen h-screen bg-white">
             <div class="w-full h-full flex items-center justify-center relative">
@@ -127,13 +132,14 @@
                                   method="post"
                                   class="w-full max-w-[550px] h-fit p-2 flex items-center justify-between rounded-xl bg-slate-200 transition-all duration-500 hover:bg-slate-300">
                                 {% csrf_token %}
+                                {% comment %} {{ cmp_form }} {% endcomment %}
                                 {% comment %} product name {% endcomment %}
                                 <div class="flex items-center justify-center">
                                     <p class="w-full text-center text-xl font-sans font-medium">{{ product.name }}</p>
                                 </div>
                                 {% comment %} selection buttons {% endcomment %}
                                 <div class="flex items-center justify-center">
-                                    <button type="button"
+                                    <button type="submit"
                                             class="p-1 bg-black text-xl font-medium text-white rounded-xl transition-all duration-500 hover:bg-white hover:text-black hover:scale-105 hover:ring-2 hover:ring-black">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                              fill="none"
@@ -144,6 +150,10 @@
                                         </svg>
                                     </button>
                                 </div>
+                                <input type="hidden"
+                                       value="{{ product.id }}|ADD"
+                                       name="action_operation"
+                                       id="id_action_operation" />
                             </form>
                         {% endfor %}
                     </div>

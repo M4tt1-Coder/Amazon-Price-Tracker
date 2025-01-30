@@ -20,6 +20,7 @@ def create(request):
         if form.is_valid():
             url = form.cleaned_data["user_input"]
             if request.POST.get("submit") == "submit":
+                print('Add a new URL')
                 with open(data_file_path, "a") as file:
                     file.write(url + "\n")
                 return redirect("create")  # update site to show new list
@@ -46,11 +47,31 @@ def home(request):
     # TODO - Add the functionality to add products to comparison list
     # TODO - Add the functionality to remove products from comparison list
 
+    # TODO - Compare between the 'adding' and 'removing' actions here
+    # maybe pass the data via URL params
+    
     comparison_product_ids = []
-    if "compared_products" in request.session:
-        comparison_product_ids = request.session["compared_products"]
+    if "compared_products_ids" in request.session:
+        comparison_product_ids = request.session["compared_products_ids"]
+        # print('Session object _____')
+        # print(request.session['compared_products_ids'])
+        # print('_____________')
     else:
-        request.session["compared_products"] = []
+        request.session["compared_products_ids"] = []
+    
+    if request.method == "POST":
+        # operation_data = form.cleaned_data["action_operation"]
+        if request.POST.get('action_operation').split('|')[1] == 'ADD':
+            print('Adding a new product')
+            product_id = request.POST.get('action_operation').split('|')[0]
+            comparison_product_ids.append(product_id)
+            request.session["compared_products_ids"] = comparison_product_ids
+        elif request.POST.get('action_operation').split('|')[1] == 'DELETE': # TODO - Finish the delete action
+            product_id = request.POST.get('action_operation').split('|')[0]
+            if product_id in request.session["compared_products"]:
+                request.session["compared_products_ids"].remove(product_id)
+        return redirect("home")  # update site to show new comparison list
+    
 
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
@@ -109,19 +130,27 @@ def home(request):
     # products = getProducts()
     # get the products that the user wants to compare
     products_to_compare = []
+    print(to_many_compared_products)
     for product in mock_products:
-        for product_id in comparison_product_ids:
-            if product['id'] == product_id:
-                products_to_compare.append(product)
-                break  # stop searching if the product is found to avoid duplicates
-        product_not_selected.append(product)
-        
+        if not to_many_compared_products:
+            for product_id in comparison_product_ids:
+                if product['id'] == product_id:
+                    products_to_compare.append(product)
+            if product['id'] not in comparison_product_ids:
+                product_not_selected.append(product)   
+        else:
+            request.session['compared_products_ids'] = []
+            return redirect('home')
+    # add and remove forms
+    # cmp_form = ModifyProdCmpListForm()
+    
     # set page context
     context = {
         "products_not_selected": product_not_selected,
         "products": mock_products,
         "compared_products": products_to_compare,
         "to_many_compared_products": to_many_compared_products,
+        # "cmp_form": cmp_form, # the add_cmp_form for adding a product to the compare list // the remove_cmp_form for removing a product
     }
     return render(request, "home.html", context)
 
