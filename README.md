@@ -292,6 +292,6 @@ Enter this command, after you activated your virtual environment:
   - dashboard (Simon)
   - display some charts (matplotlib) (Thomas)
   - design (Jannis)
-  - view endpoint functions (sascha)
+  - get product utility function (sascha)
 - API endpoints for fetching data from an Amazon API (Simon)
-- convert / work with the incoming data -> filter out important data to us (Jannis, Max) -> store data in exel file
+- delete product (Max) -> store data in exel file

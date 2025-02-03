@@ -1,5 +1,5 @@
 import pandas as pd
-from random import random
+# from random import random
 import hashlib
 import os
 
@@ -57,7 +57,4 @@ def receive_data_np():
         updated_data.to_excel(writer, index=False, sheet_name=hash)
     print(f"price: {price}, date: {date}, product: {product}, sheet-name: {hash}")
     
-# call function for testing
-# receive_data_np()
-# receive_data_np()
-# receive_data_np()
+
