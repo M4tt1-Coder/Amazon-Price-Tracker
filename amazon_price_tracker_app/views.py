@@ -43,33 +43,35 @@ def create(request):
 # our home page
 def home(request):
     # store comparison information in session -> https://docs.djangoproject.com/en/5.1/topics/http/sessions/
-    # TODO - Add the comparison feature
-    # TODO - Add the functionality to add products to comparison list
-    # TODO - Add the functionality to remove products from comparison list
 
-    # TODO - Compare between the 'adding' and 'removing' actions here
-    # maybe pass the data via URL params
-    
+    # Set a empty list of product ids
     comparison_product_ids = []
+    # if there are already some product ids in the session, load them into the comparison_product_ids list
     if "compared_products_ids" in request.session:
         comparison_product_ids = request.session["compared_products_ids"]
-        # print('Session object _____')
-        # print(request.session['compared_products_ids'])
-        # print('_____________')
-    else:
+    else: # ... or create a new session
         request.session["compared_products_ids"] = []
     
+    # when a POST request is made
     if request.method == "POST":
-        # operation_data = form.cleaned_data["action_operation"]
+        # when the user added a new product
         if request.POST.get('action_operation').split('|')[1] == 'ADD':
-            print('Adding a new product')
+            # get the product id from the form data and add it to the comparison_product_ids list
             product_id = request.POST.get('action_operation').split('|')[0]
             comparison_product_ids.append(product_id)
+            # apply the comparison_product_ids to the new session
             request.session["compared_products_ids"] = comparison_product_ids
-        elif request.POST.get('action_operation').split('|')[1] == 'DELETE': # TODO - Finish the delete action
+        # when the user deleted a product
+        elif request.POST.get('action_operation').split('|')[1] == 'DELETE': 
+            # get the product id from the form data
             product_id = request.POST.get('action_operation').split('|')[0]
-            if product_id in request.session["compared_products"]:
-                request.session["compared_products_ids"].remove(product_id)
+            # remove the product from the comparison_product_ids list and reassign the comparison_product_ids to the new session
+            if product_id in request.session["compared_products_ids"]:
+                comparison_product_ids = []
+                for id in request.session["compared_products_ids"]:
+                    if id != product_id:
+                        comparison_product_ids.append(id)
+                request.session["compared_products_ids"] = comparison_product_ids
         return redirect("home")  # update site to show new comparison list
     
 
@@ -79,6 +81,7 @@ def home(request):
 
     # Mock data for dashboard page
     # mock data test data
+    # TODO - Remove this when we are finished
     mock_products = [
         {
             "id": "be81a713-523d-46e1-a4c2-1b52e3f53604",
@@ -164,7 +167,6 @@ def dashboard(request, product_id):
         request: The HTTP request object.
         product_id: The ID of the product to be included in the dashboard.
     """
-    # TODO - Include // Finish the 'get_product' function
     # product = get_product(product_id)
     mock_product = {
         "id": 4,
