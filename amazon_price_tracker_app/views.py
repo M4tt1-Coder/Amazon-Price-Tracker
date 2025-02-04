@@ -127,7 +127,7 @@ def home(request):
         },
     ]
 
-    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.)
+    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
     # products that are not compared
     product_not_selected = []
     # products = getProducts()
