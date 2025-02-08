@@ -7,6 +7,53 @@ from django.conf import settings
 
 # Create your views here.
 
+# mock data test data
+# TODO - Remove this when we are finished
+mock_products = [
+        {
+            "id": "be81a713-523d-46e1-a4c2-1b52e3f53604",
+            "name": "Product 1",
+            "description": "Some Product 1",
+            "price": 1.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-2b52e3f53604",
+            "name": "Product 2",
+            "description": "Some Product 2",
+            "price": 34.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-3b52e3f53604",
+            "name": "Product 3",
+            "description": "Some Product 3",
+            "price": 13.59,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-4b52e3f53604",
+            "name": "Product 4",
+            "description": "Some Product 4",
+            "price": 345.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-5b52e3f53604",
+            "name": "Product 5",
+            "description": "Some Product 5",
+            "price": 23.00,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-6b52e3f53604",
+            "name": "Product 6",
+            "description": "Some Product 6",
+            "price": 3.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-7b52e3f53604",
+            "name": "Product 7",
+            "description": "Some Product 7",
+            "price": 7.49,
+        },
+    ]
+
 
 # page for adding and deleting product urls
 def create(request):
@@ -78,55 +125,7 @@ def home(request):
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
-
-    # Mock data for dashboard page
-    # mock data test data
-    # TODO - Remove this when we are finished
-    mock_products = [
-        {
-            "id": "be81a713-523d-46e1-a4c2-1b52e3f53604",
-            "name": "Product 1",
-            "description": "Some Product 1",
-            "price": 1.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-2b52e3f53604",
-            "name": "Product 2",
-            "description": "Some Product 2",
-            "price": 34.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-3b52e3f53604",
-            "name": "Product 3",
-            "description": "Some Product 3",
-            "price": 13.59,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-4b52e3f53604",
-            "name": "Product 4",
-            "description": "Some Product 4",
-            "price": 345.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-5b52e3f53604",
-            "name": "Product 5",
-            "description": "Some Product 5",
-            "price": 23.00,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-6b52e3f53604",
-            "name": "Product 6",
-            "description": "Some Product 6",
-            "price": 3.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-7b52e3f53604",
-            "name": "Product 7",
-            "description": "Some Product 7",
-            "price": 7.49,
-        },
-    ]
-
+   
     # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.)
     # products that are not compared
     product_not_selected = []
