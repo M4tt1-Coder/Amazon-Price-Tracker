@@ -1,8 +1,8 @@
 from django import forms
 
 class urlform(forms.Form):
-    user_input=forms.URLField(label="enter URL",initial="https://www.amazon.de/",help_text="here you can enter your url",
-                              widget=forms.URLInput(attrs={'class':'bg-blue-500'}))
+    user_input=forms.URLField(label="enter URL",initial="https://fakestoreapi.com/products/",help_text="here you can enter your url",
+                              widget=forms.URLInput(attrs={'class':'bg-blue-500 width-800'}))
 
 # https://www.geeksforgeeks.org/django-forms/
 # class ModifyProdCmpListForm(forms.Form): 

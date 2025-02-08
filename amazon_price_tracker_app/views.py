@@ -1,6 +1,11 @@
+import openpyxl
+import pandas as pd
+import hashlib
+from .get_productdata import *
+from .data_analyser import *
 from django.shortcuts import render, redirect
 
-# import pandas as pd
+from openpyxl import load_workbook
 from .forms import urlform
 import os
 from django.conf import settings
@@ -10,30 +15,42 @@ from django.conf import settings
 
 # page for adding and deleting product urls
 def create(request):
-    data_file_path = os.path.join(  # erstellt den absoluten pfad fer datei im djagno verzecihniss data/...
+    data_file_path = os.path.join(  # erstellt den absoluten pfad fer datei im djagno verzeichniss data/...
         settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"
     )
+    excel_file_path = os.path.join( settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
     with open(data_file_path, "r") as txt:
         data = txt.readlines()
     if request.method == "POST":
         form = urlform(request.POST)
         if form.is_valid():
             url = form.cleaned_data["user_input"]
-            if request.POST.get("submit") == "submit":
-                print('Add a new URL')
+            price, date, product = get_data_np(url)
+            hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
+
+
+            if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
                 with open(data_file_path, "a") as file:
                     file.write(url + "\n")
+                receive_data_np(url, excel_file_path)
                 return redirect("create")  # update site to show new list
-            elif request.POST.get("submit") == "delete":
+
+
+            elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
                 with open(data_file_path, "r") as file:
                     lines = file.readlines()
                 with open(data_file_path, "w") as write:
                     for line in lines:
                         if line.strip("\n") != url:
                             write.write(line)
+            #todo delete sheet from excel
+                wb = load_workbook(excel_file_path)
+                print(f"---------------------------------------------{wb}----------------------------------------")
+                wb.remove(wb[hash])
+                wb.save(excel_file_path)
                 return redirect("create")  # update site to show new list
 
-    # todo make the products be showed under each other not in a list
+
     else:
         form = urlform()
 
@@ -42,8 +59,6 @@ def create(request):
 
 # our home page
 def home(request):
-    # store comparison information in session -> https://docs.djangoproject.com/en/5.1/topics/http/sessions/
-
     # Set a empty list of product ids
     comparison_product_ids = []
     # if there are already some product ids in the session, load them into the comparison_product_ids list
@@ -127,7 +142,7 @@ def home(request):
         },
     ]
 
-    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.)
+    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
     # products that are not compared
     product_not_selected = []
     # products = getProducts()
