@@ -273,6 +273,14 @@ Now, to lint all Django Template files in the project, use the following command
 
 Also, open the `package.json` file to look at the corresponding script command!
 
+### Installing all Dependencies in your virtual environment
+
+To install all needed dependencies in your virtual environment, enter this command in a terminal in the **`Amazon-Price-Tracker`** - folder:
+
+```bash
+  pip install -r requirements.txt
+```
+
 ### Update all dependencies in virtual environment
 
 After some time, you need to update all dependencies in your virtual environment!
