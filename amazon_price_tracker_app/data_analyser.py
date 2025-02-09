@@ -11,7 +11,17 @@ from .get_productdata import get_data_np
 #    product = f"Product_{int(random() * 3)}"  # random product name (3 products for simulation)
 #    return price, date, product
 
+
+# receive_data_np function receives 'url' and 'file' as parameters,
+# then calls the 'get_data_np' function to get the 'price', 'date', and 'product'
 def receive_data_np(url,file):
+    """
+    Gets all the data for one or more products at a time and saves them to a file.
+
+    Args:
+        url (string): API URL for fetching requested data
+        file (string): Route path the storage excel file
+    """
     # declare variables for the return values of 'get_data_np()'
     price, date, product = get_data_np(url)
     

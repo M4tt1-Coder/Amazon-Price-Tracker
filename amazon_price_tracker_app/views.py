@@ -181,12 +181,14 @@ def dashboard(request, product_id):
         request: The HTTP request object.
         product_id: The ID of the product to be included in the dashboard.
     """
+    # TODO - Fetch the product from the excel file
     # product = get_product(product_id)
     mock_product = {
         "id": 4,
         "name": "Product 4",
-        "description": "Some Product 4",
+        "description": "Some Product 4 lorem ipsum dolor sit amet consectetur adip  proident et",
         "price": 345.99,
+        "date": "2015-01-01T00:00:00"
     }
     context = {"product": mock_product}
     return render(request, "dashboard.html", context)

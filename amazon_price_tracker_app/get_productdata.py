@@ -21,8 +21,7 @@ def get_data_np(Url):
 
     return price,date,name
 
-
-#this function uses proxies, maby usefull if scraping normally ist not functioning.
+#this function uses proxies, maby usefull if scraping normally is not functioning.
 #But amazon does sometimes recognize these proxies to be malicious so try to use the other function first
 def get_date_wp(Url):
     proxy_list = []
