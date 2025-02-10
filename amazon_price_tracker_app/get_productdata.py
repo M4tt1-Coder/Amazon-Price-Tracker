@@ -14,12 +14,13 @@ def get_data_np(Url):
         data=json.loads(text)
         price=data["price"]
         name=data["title"]
+        description=data["description"]
         date=datetime.today().strftime("%d/%m/%Y")
     else:
         return "An error occurred"
 
 
-    return price,date,name
+    return price,date,name,description
 
 
 #this function uses proxies, maby usefull if scraping normally ist not functioning.
