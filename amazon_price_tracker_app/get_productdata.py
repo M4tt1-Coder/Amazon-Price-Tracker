@@ -23,7 +23,7 @@ def get_data_np(Url):
 
 
 #this function uses proxies, maby usefull if scraping normally ist not functioning.
-#But amazon does sometimes recognize these proxies to be malicious so try to use the other function first
+#But amazon does sometimes recognize these proxies to be malicious so try to use the other function first  (Simon ist super)
 def get_date_wp(Url):
     proxy_list = []
     for line in open("../get_productdata_function/proxies.txt", "r"):
