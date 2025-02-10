@@ -25,7 +25,7 @@ def create(request):
         form = urlform(request.POST)
         if form.is_valid():
             url = form.cleaned_data["user_input"]
-            price, date, product = get_data_np(url)
+            price, date, product, describtion , id = get_data_np(url)
             hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
 
 
@@ -97,12 +97,13 @@ def home(request):
     # Mock data for dashboard page
     # mock data test data
     # TODO - Remove this when we are finished
+
     mock_products = [
         {
             "id": "be81a713-523d-46e1-a4c2-1b52e3f53604",
             "name": "Product 1",
             "description": "Some Product 1",
-            "price": 1.99,
+            "price": 2.99,
         },
         {
             "id": "be81a713-523d-46e1-a4c2-2b52e3f53604",
@@ -141,6 +142,22 @@ def home(request):
             "price": 7.49,
         },
     ]
+    excel_file_path = os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
+    excel = pd.read_excel(excel_file_path)
+    print(excel)
+    #ToDo this does only read the first sheet so use urls file for the range and hash the urls for th sheets
+    try:
+     for sheets in excel:
+            sheet = pd.read_excel(excel_file_path, sheet_name=sheets)
+            product = {
+            "id": sheets,
+            "name": sheet["product"][0],
+            "description": "placeholder",
+            "price": sheet["price"][len(sheet["price"]) - 1],
+            }
+            mock_products.append(product)
+    except Exception as ex:
+        print("excel is empty")
 
     # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
     # products that are not compared

@@ -13,7 +13,7 @@ from .get_productdata import get_data_np
 
 def receive_data_np(url,file):
     # declare variables for the return values of 'get_data_np()'
-    price, date, product = get_data_np(url)
+    price, date, product,description ,id = get_data_np(url)
     
     # hash 'product' variable
     hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
