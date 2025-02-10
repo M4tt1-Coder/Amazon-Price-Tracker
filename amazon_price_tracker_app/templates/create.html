@@ -5,7 +5,11 @@
 <script>
   function CopyText(clicked_id) {
   var text = document.getElementById(clicked_id);
-  text.select();
+  var title = text.getAttribute("title");
+  var tempInput = document.createElement("input");
+        tempInput.value = title;
+        document.body.appendChild(tempInput);
+        tempInput.select();
   document.execCommand('copy')}
 
 
@@ -41,8 +45,8 @@
             <p class="text-black text-center font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">
                 Your Product URLs:
             </p>
-            {% for item in products %}
-            <li><span type="button" contenteditable="true" title="{{item}}"  id="span" class="w-auto align-center"  ><input type="text" title="{{item}}" value="{{item}}"  id="{{item}}" class="w-full" onclick="CopyText(id)"></span></li>
+            {% for item in products%}
+            <li><span type="button" contenteditable="true" title="{{item}}"  id="span" class="w-auto align-center"  ><input type="text" title="{{item.url}}" value="{{item.product}}"  id="{{item.product}}" class="w-full" onclick="CopyText(id)"></span></li>
             {%endfor%}
             </div>
     </div>

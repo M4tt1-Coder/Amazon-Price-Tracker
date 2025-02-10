@@ -19,8 +19,17 @@ def create(request):
         settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"
     )
     excel_file_path = os.path.join( settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
-    with open(data_file_path, "r") as txt:
-        data = txt.readlines()
+
+    products=[]
+    for lines in open(data_file_path):
+        products.append(get_data_np(lines)[2])
+    with open(data_file_path, "r") as file:
+        urls=file.readlines()
+    data =[]
+    for i in range(len(products)):
+        data.append({"url":urls[i],"product": products[i]})
+    print(data)
+
     if request.method == "POST":
         form = urlform(request.POST)
         if form.is_valid():
@@ -43,7 +52,6 @@ def create(request):
                     for line in lines:
                         if line.strip("\n") != url:
                             write.write(line)
-            #todo delete sheet from excel
                 wb = load_workbook(excel_file_path)
                 print(f"---------------------------------------------{wb}----------------------------------------")
                 wb.remove(wb[hash])
