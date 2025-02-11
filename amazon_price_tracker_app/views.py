@@ -147,19 +147,19 @@ def home(request):
     # products = getProducts()
     # get the products that the user wants to compare
     products_to_compare = []
-    print(to_many_compared_products)
     for product in mock_products:
         if not to_many_compared_products:
             for product_id in comparison_product_ids:
                 if product['id'] == product_id:
-                    products_to_compare.append(product)
+                    # TODO - Fetch the price development chart string for this product
+                    products_to_compare.append({"product": product, "chart_string": ""})
             if product['id'] not in comparison_product_ids:
                 product_not_selected.append(product)   
         else:
             request.session['compared_products_ids'] = []
             return redirect('home')
-    # add and remove forms
-    # cmp_form = ModifyProdCmpListForm()
+    
+    # get the price development charts
     
     # set page context
     context = {
@@ -190,5 +190,7 @@ def dashboard(request, product_id):
         "price": 345.99,
         "date": "2015-01-01T00:00:00"
     }
-    context = {"product": mock_product}
+    
+    # TODO - Also add here the product plot chart string function
+    context = {"product": mock_product, "prod_plot_string": ""}
     return render(request, "dashboard.html", context)

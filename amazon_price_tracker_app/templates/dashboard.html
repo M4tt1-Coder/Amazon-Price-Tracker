@@ -27,7 +27,13 @@
    </div>
    {% comment %} price development chart {% endcomment %}
    <!-- TODO - Add the matplotlib price chart of a product in the dashboard -->
-   <div class="h-full w-full row-span-3 col-span-1"></div>
+   <div class="h-full w-full row-span-3 col-span-1 p-2">
+    <img src="data:image/png;base64,{{ prod_plot_string }}"
+         alt="{{ product.name }}"
+         class="w-full h-full rounded-xl"
+         height=""
+         width="">
+   </div>
   </div>
  </div>
 {% endblock content %}
