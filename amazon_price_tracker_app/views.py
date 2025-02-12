@@ -72,6 +72,7 @@ def create(request):
         form = urlform(request.POST)
         if form.is_valid():
             url = form.cleaned_data["user_input"]
+            print(url)
             price, date, product = get_data_np(url)
             hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
 

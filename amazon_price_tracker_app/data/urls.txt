@@ -1,2 +1,4 @@
 https://fakestoreapi.com/products/2
 https://fakestoreapi.com/products/3
+https://www.amazon.de/123
+https://www.amazon.de/test4
