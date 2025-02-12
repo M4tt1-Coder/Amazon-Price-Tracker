@@ -1,5 +1,5 @@
 # Amazon-Price-Tracker
-A exam project for "Programmieren in Python". It shows the prices and its development of a specific product.
+An exam project for "Programmieren in Python". It shows the price and its development of a specific product.
 
 ## Setup
 
@@ -273,6 +273,14 @@ Now, to lint all Django Template files in the project, use the following command
 
 Also, open the `package.json` file to look at the corresponding script command!
 
+### Installing all Dependencies in your virtual environment
+
+To install all needed dependencies in your virtual environment, enter this command in a terminal in the **`Amazon-Price-Tracker`** - folder:
+
+```bash
+  pip install -r requirements.txt
+```
+
 ### Update all dependencies in virtual environment
 
 After some time, you need to update all dependencies in your virtual environment!
@@ -292,6 +300,6 @@ Enter this command, after you activated your virtual environment:
   - dashboard (Simon)
   - display some charts (matplotlib) (Thomas)
   - design (Jannis)
-  - view endpoint functions (sascha)
+  - get product utility function (sascha)
 - API endpoints for fetching data from an Amazon API (Simon)
-- convert / work with the incoming data -> filter out important data to us (Jannis, Max) -> store data in exel file
+- delete product (Max) -> store data in exel file
