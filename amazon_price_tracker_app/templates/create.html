@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-{%block content%}
-{% block scripts %}
-<script>
+{% block content %}
+    {% block scripts %}
+        <script>
   function CopyText(clicked_id) {
   var text = document.getElementById(clicked_id);
   text.select();
@@ -14,8 +14,8 @@
 
 }
 
-</script>
-{% endblock scripts %}
+        </script>
+    {% endblock scripts %}
     <div class="w-full bg-gray-200 rounded-lg">
         <h1 class="text-center font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">
             Here you can add a Product to you tracker
@@ -42,8 +42,21 @@
                 Your Product URLs:
             </p>
             {% for item in products %}
-            <li><span type="button" contenteditable="true" title="{{item}}"  id="span" class="w-auto align-center"  ><input type="text" title="{{item}}" value="{{item}}"  id="{{item}}" class="w-full" onclick="CopyText(id)"></span></li>
-            {%endfor%}
-            </div>
+                <li>
+                    <span type="button"
+                          contenteditable="true"
+                          title="{{ item }}"
+                          id="span"
+                          class="w-auto align-center">
+                        <input type="text"
+                               title="{{ item }}"
+                               value="{{ item }}"
+                               id="{{ item }}"
+                               class="w-full"
+                               onclick="CopyText(id)">
+                    </span>
+                </li>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}

@@ -12,6 +12,53 @@ from django.conf import settings
 
 # Create your views here.
 
+# mock data test data
+# TODO - Remove this when we are finished
+mock_products = [
+        {
+            "id": "be81a713-523d-46e1-a4c2-1b52e3f53604",
+            "name": "Product 1",
+            "description": "Some Product 1",
+            "price": 1.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-2b52e3f53604",
+            "name": "Product 2",
+            "description": "Some Product 2",
+            "price": 34.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-3b52e3f53604",
+            "name": "Product 3",
+            "description": "Some Product 3",
+            "price": 13.59,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-4b52e3f53604",
+            "name": "Product 4",
+            "description": "Some Product 4",
+            "price": 345.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-5b52e3f53604",
+            "name": "Product 5",
+            "description": "Some Product 5",
+            "price": 23.00,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-6b52e3f53604",
+            "name": "Product 6",
+            "description": "Some Product 6",
+            "price": 3.99,
+        },
+        {
+            "id": "be81a713-523d-46e1-a4c2-7b52e3f53604",
+            "name": "Product 7",
+            "description": "Some Product 7",
+            "price": 7.49,
+        },
+    ]
+
 
 # page for adding and deleting product urls
 def create(request):
@@ -93,74 +140,26 @@ def home(request):
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
-
-    # Mock data for dashboard page
-    # mock data test data
-    # TODO - Remove this when we are finished
-    mock_products = [
-        {
-            "id": "be81a713-523d-46e1-a4c2-1b52e3f53604",
-            "name": "Product 1",
-            "description": "Some Product 1",
-            "price": 1.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-2b52e3f53604",
-            "name": "Product 2",
-            "description": "Some Product 2",
-            "price": 34.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-3b52e3f53604",
-            "name": "Product 3",
-            "description": "Some Product 3",
-            "price": 13.59,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-4b52e3f53604",
-            "name": "Product 4",
-            "description": "Some Product 4",
-            "price": 345.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-5b52e3f53604",
-            "name": "Product 5",
-            "description": "Some Product 5",
-            "price": 23.00,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-6b52e3f53604",
-            "name": "Product 6",
-            "description": "Some Product 6",
-            "price": 3.99,
-        },
-        {
-            "id": "be81a713-523d-46e1-a4c2-7b52e3f53604",
-            "name": "Product 7",
-            "description": "Some Product 7",
-            "price": 7.49,
-        },
-    ]
-
+   
     # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
     # products that are not compared
     product_not_selected = []
     # products = getProducts()
     # get the products that the user wants to compare
     products_to_compare = []
-    print(to_many_compared_products)
     for product in mock_products:
         if not to_many_compared_products:
             for product_id in comparison_product_ids:
                 if product['id'] == product_id:
-                    products_to_compare.append(product)
+                    # TODO - Fetch the price development chart string for this product
+                    products_to_compare.append({"product": product, "chart_string": ""})
             if product['id'] not in comparison_product_ids:
                 product_not_selected.append(product)   
         else:
             request.session['compared_products_ids'] = []
             return redirect('home')
-    # add and remove forms
-    # cmp_form = ModifyProdCmpListForm()
+    
+    # get the price development charts
     
     # set page context
     context = {
@@ -182,12 +181,16 @@ def dashboard(request, product_id):
         request: The HTTP request object.
         product_id: The ID of the product to be included in the dashboard.
     """
+    # TODO - Fetch the product from the excel file
     # product = get_product(product_id)
     mock_product = {
         "id": 4,
         "name": "Product 4",
-        "description": "Some Product 4",
+        "description": "Some Product 4 lorem ipsum dolor sit amet consectetur adip  proident et",
         "price": 345.99,
+        "date": "2015-01-01T00:00:00"
     }
-    context = {"product": mock_product}
+    
+    # TODO - Also add here the product plot chart string function
+    context = {"product": mock_product, "prod_plot_string": ""}
     return render(request, "dashboard.html", context)
