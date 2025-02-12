@@ -1,63 +1,81 @@
+import openpyxl
 import pandas as pd
-from random import random
-import hashlib
+from .get_productdata import get_data_np
 import os
+#import hashlib
+#from random import random
+#from datetime import datetime
 
-# function for testing
+# test function
 #def get_data_np():
-#    price = random()  # random price
-#    date = random()   # random date
-#    product = f"Product_{int(random() * 3)}"  # random product name (3 products for simulation)
-#    return price, date, product
+    #price = round(random() * 100, 2)
+    #date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    #name = f"Product_{int(random() * 3)}"
+    #description = "This is a vivid product description"
+    #id = f"ID_{hashlib.sha256(name.encode()).hexdigest()[:7]}"
 
-def receive_data_np():
-    # declare variables for the return values of 'get_data_np()'
-    price, date, product = get_data_np()
-    
-    # hash 'product' variable
-    hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
-    
-    # declare excel file name 
-    file_name = 'amazon_product_data.xlsx'
-    
-    # check if excel 'amazon_product_data.xlsx' in variable 'file_name' exists
-    file_exists = os.path.exists(file_name)
-    
-    # create DataFrame
-    new_data = pd.DataFrame([[price, date, product]], columns=['price', 'date', 'product'])
+    #return price, date, name, description, id
 
-    # if variable 'file_exists' is true
+def receive_data_np(url,file):
+    # receive 5 return values from 'get_data_np()'
+    price, date, name, description, id = get_data_np(url)
+    # create dictionary for return values
+    product_entry = {"price": price,
+                     "date": date,
+                     "name": name,
+                     "description": description,
+                     "id": id}
+
+    file_exists = os.path.exists(file)
+
+    # load existing data if the file exists
     if file_exists:
-        # reading data of 'file_name'
-        excel_data = pd.ExcelFile(file_name)
-        # if there is already a 'hash' variable written in a excel sheet-name
-        if hash in excel_data.sheet_names:
-            # read 'file_name' with the already existing 'hash' variable
-            existing_data = pd.read_excel(file_name, sheet_name=hash)
-            # add 'updated_data' to 'existing_data'
-            updated_data = pd.concat([existing_data, new_data], ignore_index=True)
-        # if there's no 'hash' variable written in a excel sheet-name
-        else:
-            # create new sheet with new data
-            updated_data = new_data
-
-    # if variable 'file_exists' is false
+        with pd.ExcelFile(file, engine='openpyxl') as excel_data:
+            sheet_exists = id in excel_data.sheet_names
+            existing_data = pd.read_excel(file, sheet_name=id) if sheet_exists else pd.DataFrame()
     else:
-        # create new sheet with new data
-        updated_data = new_data
-        with pd.ExcelWriter(file_name, engine='openpyxl') as writer:
-            # write hash value into first excel sheet
-            new_data.to_excel(writer, index=False, sheet_name=hash)
-        print(f"Created new excel file '{file_name}'")
-        print(f"price: {price}, date: {date}, product: {product}, sheet-name: {hash}")
+        sheet_exists = False
+        existing_data = pd.DataFrame()
+
+    # create DataFrame for new product
+    new_data = pd.DataFrame([product_entry])
+
+    # combine old and new data if the sheet exists
+    updated_data = pd.concat([existing_data, new_data], ignore_index=True) if sheet_exists else new_data
+
+    # save to excel, replacing the sheet if it exists
+    with pd.ExcelWriter(file, engine='openpyxl', mode='a' if file_exists else 'w', if_sheet_exists='replace' if sheet_exists else None) as writer:
+        updated_data.to_excel(writer, sheet_name=id, index=False)
+
+    print(f"Added: {product_entry}")
+
+def delete_excel_sheet(file, sheet_name):
+    """Deletes a specific sheet from an Excel file."""
+    if not os.path.exists(file):
+        print(f"File '{file}' does not exist.")
         return
 
-    # write data in excel
-    with pd.ExcelWriter(file_name, mode='a', engine='openpyxl', if_sheet_exists='replace') as writer:
-        updated_data.to_excel(writer, index=False, sheet_name=hash)
-    print(f"price: {price}, date: {date}, product: {product}, sheet-name: {hash}")
-    
-# call function for testing
-# receive_data_np()
-# receive_data_np()
-# receive_data_np()
+    wb = openpyxl.load_workbook(file)
+
+    if sheet_name not in wb.sheetnames:
+        print(f"Sheet '{sheet_name}' not found in '{file}'.")
+        return
+
+    # remove the excel-sheet
+    wb.remove(wb[sheet_name])
+
+    # if no sheets remain, delete the entire file
+    if not wb.sheetnames:
+        os.remove(file)
+        print(f"Deleted last sheet '{sheet_name}' and removed file '{file}'.")
+    else:
+        wb.save(file)
+        print(f"Deleted sheet '{sheet_name}' from '{file}'.")
+
+def delete_all_products(file):
+
+    if os.path.exists(file):
+        os.remove(file)
+        print(f"Removed file '{file}'.")
+    else:
+        print(f"File '{file}' does not exist.")
