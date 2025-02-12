@@ -16,7 +16,6 @@ def get_data_np(Url):
         name=data["title"]
         date=datetime.today().strftime("%d/%m/%Y")
     else:
-        print("Got HTTP error")
         return "An error occurred"
 
 
