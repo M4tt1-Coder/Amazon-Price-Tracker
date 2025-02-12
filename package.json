@@ -1,7 +1,7 @@
 {
   "name": "amazon-price-tracker",
   "version": "1.0.0",
-  "description": "Styling for the Django Templates!",
+  "description": "Styling and linting for the Django Templates!",
   "scripts": {
     "watch:css": "pnpx @tailwindcss/cli -i ./static/css/styles.css -o ./static/css/output.css --watch",
     "lint": "djlint ./amazon_price_tracker_app/templates --profile=django --lint --reformat --warn"
@@ -11,10 +11,11 @@
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^10.4.20",
-    "postcss": "^8.5.1",
-    "tailwindcss": "^4.0.0"
+    "postcss": "^8.5.2",
+    "tailwindcss": "^4.0.6"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.0.0"
-  }
+    "@tailwindcss/cli": "^4.0.6"
+  },
+  "packageManager": "pnpm@10.2.1+sha512.398035c7bd696d0ba0b10a688ed558285329d27ea994804a52bad9167d8e3a72bcb993f9699585d3ca25779ac64949ef422757a6c31102c12ab932e5cbe5cc92"
 }
