@@ -6,6 +6,7 @@ import os
 #from random import random
 #from datetime import datetime
 
+
 # test function
 #def get_data_np():
     #price = round(random() * 100, 2)

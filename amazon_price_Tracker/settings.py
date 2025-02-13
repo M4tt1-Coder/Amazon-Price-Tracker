@@ -1,5 +1,3 @@
-# TODO - make the pages responsive
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
