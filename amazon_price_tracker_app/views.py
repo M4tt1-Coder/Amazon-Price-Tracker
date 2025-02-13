@@ -19,7 +19,8 @@ def create(request):
         settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"
     )
     excel_file_path = os.path.join( settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
-
+    expected = "https://fakestoreapi.com/"
+    flag=False
     products=[]
     for lines in open(data_file_path):
         products.append(get_data_np(lines)[2])
@@ -28,41 +29,44 @@ def create(request):
     data =[]
     for i in range(len(products)):
         data.append({"url":urls[i],"product": products[i]})
-    print(data)
+    #print(data)
 
     if request.method == "POST":
         form = urlform(request.POST)
         if form.is_valid():
             url = form.cleaned_data["user_input"]
-            price, date, product, describtion , id = get_data_np(url)
-            hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
+            if url[:len(expected)] == expected:  # checks if the input starts with the correct url for our API
+                price, date, product, describtion , id = get_data_np(url)
+                hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
+                if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
+                    with open(data_file_path, "a") as file:
+                        file.write(url + "\n")
+                    receive_data_np(url, excel_file_path)
+                    return redirect("create")  # update site to show new list
 
 
-            if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
-                with open(data_file_path, "a") as file:
-                    file.write(url + "\n")
-                receive_data_np(url, excel_file_path)
-                return redirect("create")  # update site to show new list
-
-
-            elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
-                with open(data_file_path, "r") as file:
-                    lines = file.readlines()
-                with open(data_file_path, "w") as write:
-                    for line in lines:
-                        if line.strip("\n") != url:
-                            write.write(line)
-                wb = load_workbook(excel_file_path)
-                print(f"---------------------------------------------{wb}----------------------------------------")
-                wb.remove(wb[hash])
-                wb.save(excel_file_path)
-                return redirect("create")  # update site to show new list
-
+                elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
+                    with open(data_file_path, "r") as file:
+                        lines = file.readlines()
+                    with open(data_file_path, "w") as write:
+                        for line in lines:
+                            if line.strip("\n") != url:
+                                write.write(line)
+                    wb = load_workbook(excel_file_path)
+                    #print(f"---------------------------------------------{wb}----------------------------------------")
+                    wb.remove(wb[hash])
+                    wb.save(excel_file_path)
+                    return redirect("create")  # update site to show new list
+            else:
+                flag=True #sets a flag that we then can use to trigger a response in the template
+                if request.method == "POST" and "go_back" in request.POST:#checks if user has clicked the back butten
+                    flag=False
+                    return redirect("create") #resets the page
 
     else:
         form = urlform()
 
-    return render(request, "create.html", {"form": form, "products": data})
+    return render(request, "create.html", {"form": form, "products": data,"flag":flag})
 
 
 # our home page

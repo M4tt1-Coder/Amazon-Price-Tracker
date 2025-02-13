@@ -41,9 +41,23 @@
                 </form>
             </div>
         </div>
+        {% if flag%}
+            <div class="fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60 border-2 border-black rounded-lg">
+               <h>Error:</h>
+                <p>You currently can only submit URLs from: https://fakestoreapi.com/</p>
+                <form action="{% url 'create' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="go_back" class="backdrop-blur-2xl bg-black text-white hover:bg-white hover:text-black hover:scale-105 hover:ring-2 hover:ring-black">go back</button>
+                </form>
+
+
+            </div>
+
+
+        {% endif %}
         <div class="display w-full rounded">
             <p class="text-black text-center font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">
-                Your Product URLs:
+                Your Product URLs (click to copy links):
             </p>
             {% for item in products%}
             <li><span type="button" contenteditable="true" title="{{item}}"  id="span" class="w-auto align-center"  ><input type="text" title="{{item.url}}" value="{{item.product}}"  id="{{item.product}}" class="w-full" onclick="CopyText(id)"></span></li>
