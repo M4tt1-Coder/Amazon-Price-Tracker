@@ -1,8 +1,6 @@
-import openpyxl
-import pandas as pd
 import hashlib
-from .get_productdata import *
-from .data_analyser import *
+from .get_productdata import get_data_np
+from .data_analyser import delete_all_products, receive_data_np
 from django.shortcuts import render, redirect
 
 from openpyxl import load_workbook
@@ -83,15 +81,13 @@ def create(request):
         if form.is_valid():
             url = form.cleaned_data["user_input"]
             if url[:len(expected)] == expected:  # checks if the input starts with the correct url for our API
-                price, date, product, describtion , id = get_data_np(url)
+                price, date, product, describtion, id = get_data_np(url)
                 hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
                 if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
                     with open(data_file_path, "a") as file:
                         file.write(url + "\n")
                     receive_data_np(url, excel_file_path)
                     return redirect("create")  # update site to show new list
-
-
                 elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
                     with open(data_file_path, "r") as file:
                         lines = file.readlines()
@@ -100,7 +96,6 @@ def create(request):
                             if line.strip("\n") != url:
                                 write.write(line)
                     wb = load_workbook(excel_file_path)
-                    #print(f"---------------------------------------------{wb}----------------------------------------")
                     wb.remove(wb[hash])
                     wb.save(excel_file_path)
                     return redirect("create")  # update site to show new list
@@ -126,8 +121,24 @@ def home(request):
     else: # ... or create a new session
         request.session["compared_products_ids"] = []
     
+    # TODO - Add the delete all functionality
     # when a POST request is made
     if request.method == "POST":
+        # delete all the products
+        if request.POST.get('action_operation') == "DELETE_ALL":
+            # remove all the products from the comparison_product_ids list and reassign the comparison_product_ids to the new session
+            comparison_product_ids = []
+            request.session["compared_products_ids"] = comparison_product_ids
+            # clear the excel file
+            # amazon_price_tracker_app/data/amazon_product_data.xlsx
+            delete_all_products(os.path.join(settings.BASE_DIR, 'amazon_price_tracker_app/data/amazon_product_data.xlsx'))
+            # clear the urls textfile
+            url_file_path = os.path.join(  # erstellt den absoluten pfad fer datei im djagno verzeichniss data/...
+                settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"
+            )
+            with open(url_file_path, "w") as url_txt:
+                url_txt.truncate()
+            return redirect("home")  # update site to show the empty comparison list
         # when the user added a new product
         if request.POST.get('action_operation').split('|')[1] == 'ADD':
             # get the product id from the form data and add it to the comparison_product_ids list
@@ -153,21 +164,22 @@ def home(request):
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
 
-    excel_file_path = os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
-    excel = pd.read_excel(excel_file_path)
-    #ToDo this does only read the first sheet so use urls file for the range and hash the urls for th sheets
-    try:
-     for sheets in excel:
-            sheet = pd.read_excel(excel_file_path, sheet_name=sheets)
-            product = {
-            "id": sheets,
-            "name": sheet["product"][0],
-            "description": "placeholder",
-            "price": sheet["price"][len(sheet["price"]) - 1],
-            }
-            mock_products.append(product)
-    except Exception as ex:
-        print("excel is empty")
+    # TODO - Move this to a separate utility function
+    # excel_file_path = os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
+    # excel = pd.read_excel(excel_file_path)
+    # #ToDo this does only read the first sheet so use urls file for the range and hash the urls for th sheets
+    # try:
+    #  for sheets in excel:
+    #         sheet = pd.read_excel(excel_file_path, sheet_name=sheets)
+    #         product = {
+    #         "id": sheets,
+    #         "name": sheet["product"][0],
+    #         "description": "placeholder",
+    #         "price": sheet["price"][len(sheet["price"]) - 1],
+    #         }
+    #         mock_products.append(product)
+    # except Exception as ex:
+    #     print("excel is empty")
 
     # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
     # products that are not compared
