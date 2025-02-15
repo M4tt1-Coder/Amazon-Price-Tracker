@@ -66,42 +66,54 @@ def create(request):
         settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"
     )
     excel_file_path = os.path.join( settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
-    with open(data_file_path, "r") as txt:
-        data = txt.readlines()
+    expected = "https://fakestoreapi.com/"
+    flag=False
+    products=[]
+    for lines in open(data_file_path):
+        products.append(get_data_np(lines)[2])
+    with open(data_file_path, "r") as file:
+        urls=file.readlines()
+    data =[]
+    for i in range(len(products)):
+        data.append({"url":urls[i],"product": products[i]})
+    #print(data)
+
     if request.method == "POST":
         form = urlform(request.POST)
         if form.is_valid():
             url = form.cleaned_data["user_input"]
-            price, date, product = get_data_np(url)
-            hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
+            if url[:len(expected)] == expected:  # checks if the input starts with the correct url for our API
+                price, date, product, describtion , id = get_data_np(url)
+                hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
+                if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
+                    with open(data_file_path, "a") as file:
+                        file.write(url + "\n")
+                    receive_data_np(url, excel_file_path)
+                    return redirect("create")  # update site to show new list
 
 
-            if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
-                with open(data_file_path, "a") as file:
-                    file.write(url + "\n")
-                receive_data_np(url, excel_file_path)
-                return redirect("create")  # update site to show new list
-
-
-            elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
-                with open(data_file_path, "r") as file:
-                    lines = file.readlines()
-                with open(data_file_path, "w") as write:
-                    for line in lines:
-                        if line.strip("\n") != url:
-                            write.write(line)
-            #todo delete sheet from excel
-                wb = load_workbook(excel_file_path)
-                print(f"---------------------------------------------{wb}----------------------------------------")
-                wb.remove(wb[hash])
-                wb.save(excel_file_path)
-                return redirect("create")  # update site to show new list
-
+                elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
+                    with open(data_file_path, "r") as file:
+                        lines = file.readlines()
+                    with open(data_file_path, "w") as write:
+                        for line in lines:
+                            if line.strip("\n") != url:
+                                write.write(line)
+                    wb = load_workbook(excel_file_path)
+                    #print(f"---------------------------------------------{wb}----------------------------------------")
+                    wb.remove(wb[hash])
+                    wb.save(excel_file_path)
+                    return redirect("create")  # update site to show new list
+            else:
+                flag=True #sets a flag that we then can use to trigger a response in the template
+                if request.method == "POST" and "go_back" in request.POST:#checks if user has clicked the back butten
+                    flag=False
+                    return redirect("create") #resets the page
 
     else:
         form = urlform()
 
-    return render(request, "create.html", {"form": form, "products": data})
+    return render(request, "create.html", {"form": form, "products": data,"flag":flag})
 
 
 # our home page
@@ -140,7 +152,23 @@ def home(request):
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
-   
+
+    excel_file_path = os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
+    excel = pd.read_excel(excel_file_path)
+    #ToDo this does only read the first sheet so use urls file for the range and hash the urls for th sheets
+    try:
+     for sheets in excel:
+            sheet = pd.read_excel(excel_file_path, sheet_name=sheets)
+            product = {
+            "id": sheets,
+            "name": sheet["product"][0],
+            "description": "placeholder",
+            "price": sheet["price"][len(sheet["price"]) - 1],
+            }
+            mock_products.append(product)
+    except Exception as ex:
+        print("excel is empty")
+
     # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
     # products that are not compared
     product_not_selected = []
