@@ -113,6 +113,20 @@ def create(request):
 
 # our home page
 def home(request):
+    """
+    Manages the home page where all products can be deleted.
+    
+    Products can be compared and examined in the dashboard by clicking on a redirecting button.
+    
+    Args:
+        request (Django HTTP Request Object): HTTP request object
+
+    Returns:
+        Context and UI data that is displayed in the viewport
+    """
+    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
+    # get all current products
+    products = mock_products
     # Set a empty list of product ids
     comparison_product_ids = []
     # if there are already some product ids in the session, load them into the comparison_product_ids list
@@ -121,7 +135,6 @@ def home(request):
     else: # ... or create a new session
         request.session["compared_products_ids"] = []
     
-    # TODO - Add the delete all functionality
     # when a POST request is made
     if request.method == "POST":
         # delete all the products
@@ -163,31 +176,13 @@ def home(request):
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
-
-    # TODO - Move this to a separate utility function
-    # excel_file_path = os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
-    # excel = pd.read_excel(excel_file_path)
-    # #ToDo this does only read the first sheet so use urls file for the range and hash the urls for th sheets
-    # try:
-    #  for sheets in excel:
-    #         sheet = pd.read_excel(excel_file_path, sheet_name=sheets)
-    #         product = {
-    #         "id": sheets,
-    #         "name": sheet["product"][0],
-    #         "description": "placeholder",
-    #         "price": sheet["price"][len(sheet["price"]) - 1],
-    #         }
-    #         mock_products.append(product)
-    # except Exception as ex:
-    #     print("excel is empty")
-
-    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
+    
     # products that are not compared
     product_not_selected = []
     # products = getProducts()
     # get the products that the user wants to compare
     products_to_compare = []
-    for product in mock_products:
+    for product in products:
         if not to_many_compared_products:
             for product_id in comparison_product_ids:
                 if product['id'] == product_id:
@@ -204,16 +199,13 @@ def home(request):
     # set page context
     context = {
         "products_not_selected": product_not_selected,
-        "products": mock_products,
+        "products": products,
         "compared_products": products_to_compare,
         "to_many_compared_products": to_many_compared_products,
-        # "cmp_form": cmp_form, # the add_cmp_form for adding a product to the compare list // the remove_cmp_form for removing a product
     }
     return render(request, "home.html", context)
 
-
-# TODO - Finish the dashboard page
-def dashboard(request, product_id):
+def dashboard(request, product_id: str):
     """
     Entrypoint for the dashboard page.
 
@@ -230,7 +222,8 @@ def dashboard(request, product_id):
         "price": 345.99,
         "date": "2015-01-01T00:00:00"
     }
+    product = mock_product
     
     # TODO - Also add here the product plot chart string function
-    context = {"product": mock_product, "prod_plot_string": ""}
+    context = {"product": product, "prod_plot_string": ""}
     return render(request, "dashboard.html", context)
