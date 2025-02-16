@@ -69,6 +69,7 @@ def create(request):
     expected = "https://fakestoreapi.com/"
     flag=False
     products=[]
+
     for lines in open(data_file_path):
         products.append(get_data_np(lines)[2])
     with open(data_file_path, "r") as file:
@@ -77,6 +78,7 @@ def create(request):
     for i in range(len(products)):
         data.append({"url":urls[i],"product": products[i]})
     #print(data)
+
 
     if request.method == "POST":
         form = urlform(request.POST)
@@ -99,11 +101,8 @@ def create(request):
                         for line in lines:
                             if line.strip("\n") != url:
                                 write.write(line)
-                    wb = load_workbook(excel_file_path)
-                    #print(f"---------------------------------------------{wb}----------------------------------------")
-                    wb.remove(wb[hash])
-                    wb.save(excel_file_path)
-                    return redirect("create")  # update site to show new list
+                    delete_excel_sheet(excel_file_path,hash)
+                    return redirect("create")
             else:
                 flag=True #sets a flag that we then can use to trigger a response in the template
                 if request.method == "POST" and "go_back" in request.POST:#checks if user has clicked the back butten
@@ -166,7 +165,7 @@ def home(request):
             "price": sheet["price"][len(sheet["price"]) - 1],
             }
             mock_products.append(product)
-    except Exception as ex:
+    except Exception as e:
         print("excel is empty")
 
     # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
