@@ -238,6 +238,12 @@ Also, take a look at the the [TailwindCSS documentation](https://tailwindcss.com
 
 Please refer to the docs for more information about running the Django server [`here`](https://docs.djangoproject.com/en/5.1/intro/tutorial01/)
 
+First you need to migrate changes to your local development **SQLite** database to use [`Django Sessions`](https://docs.djangoproject.com/en/5.1/topics/http/sessions/) stored in a database.
+
+```bash
+  python manage.py migrate
+```
+
 To start the server, go the "Amazon-Price-Tracker" folder, open a terminal and type:
 ```bash
   python manage.py runserver
