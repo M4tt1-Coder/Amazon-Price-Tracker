@@ -1,6 +1,6 @@
 import hashlib
 from .get_productdata import get_data_np
-from .data_analyser import delete_all_products, receive_data_np
+from .data_analyser import delete_all_products, receive_data_np, delete_excel_sheet
 from django.shortcuts import render, redirect
 
 from openpyxl import load_workbook
@@ -218,7 +218,7 @@ def dashboard(request, product_id: str):
     mock_product = {
         "id": 4,
         "name": "Product 4",
-        "description": "Some Product 4 lorem ipsum dolor sit amet consectetur adip  proident et",
+        "description": "Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
         "price": 345.99,
         "date": "2015-01-01T00:00:00"
     }
