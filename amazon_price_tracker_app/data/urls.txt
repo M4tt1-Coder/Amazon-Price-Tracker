@@ -1,2 +1,0 @@
-https://fakestoreapi.com/products/10
-https://fakestoreapi.com/products/5
