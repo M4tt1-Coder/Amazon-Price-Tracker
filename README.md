@@ -309,4 +309,3 @@ Enter this command, after you activated your virtual environment:
   - get product utility function (sascha)
 - API endpoints for fetching data from an Amazon API (Simon)
 - delete product (Max) -> store data in exel file
-(Thomas hat Duenschiss)
