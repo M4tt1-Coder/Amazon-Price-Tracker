@@ -1,8 +1,8 @@
 import openpyxl
 import pandas as pd
 import hashlib
-from .get_productdata import *
-from .data_analyser import *
+from .get_productdata import get_data_np
+from .data_analyser import delete_all_products, receive_data_np, delete_excel_sheet
 from django.shortcuts import render, redirect
 
 from openpyxl import load_workbook
@@ -69,7 +69,6 @@ def create(request):
     expected = "https://fakestoreapi.com/"
     flag=False
     products=[]
-
     for lines in open(data_file_path):
         products.append(get_data_np(lines)[2])
     with open(data_file_path, "r") as file:
@@ -79,21 +78,18 @@ def create(request):
         data.append({"url":urls[i],"product": products[i]})
     #print(data)
 
-
     if request.method == "POST":
         form = urlform(request.POST)
         if form.is_valid():
             url = form.cleaned_data["user_input"]
             if url[:len(expected)] == expected:  # checks if the input starts with the correct url for our API
-                price, date, product, describtion , id = get_data_np(url)
+                price, date, product, describtion, id = get_data_np(url)
                 hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
                 if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
                     with open(data_file_path, "a") as file:
                         file.write(url + "\n")
                     receive_data_np(url, excel_file_path)
                     return redirect("create")  # update site to show new list
-
-
                 elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
                     with open(data_file_path, "r") as file:
                         lines = file.readlines()
@@ -117,6 +113,20 @@ def create(request):
 
 # our home page
 def home(request):
+    """
+    Manages the home page where all products can be deleted.
+
+    Products can be compared and examined in the dashboard by clicking on a redirecting button.
+
+    Args:
+        request (Django HTTP Request Object): HTTP request object
+
+    Returns:
+        Context and UI data that is displayed in the viewport
+    """
+    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
+    # get all current products
+    products = mock_products
     # Set a empty list of product ids
     comparison_product_ids = []
     # if there are already some product ids in the session, load them into the comparison_product_ids list
@@ -127,6 +137,21 @@ def home(request):
     
     # when a POST request is made
     if request.method == "POST":
+        # delete all the products
+        if request.POST.get('action_operation') == "DELETE_ALL":
+            # remove all the products from the comparison_product_ids list and reassign the comparison_product_ids to the new session
+            comparison_product_ids = []
+            request.session["compared_products_ids"] = comparison_product_ids
+            # clear the excel file
+            # amazon_price_tracker_app/data/amazon_product_data.xlsx
+            delete_all_products(os.path.join(settings.BASE_DIR, 'amazon_price_tracker_app/data/amazon_product_data.xlsx'))
+            # clear the urls textfile
+            url_file_path = os.path.join(  # erstellt den absoluten pfad fer datei im djagno verzeichniss data/...
+                settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"
+            )
+            with open(url_file_path, "w") as url_txt:
+                url_txt.truncate()
+            return redirect("home")  # update site to show the empty comparison list
         # when the user added a new product
         if request.POST.get('action_operation').split('|')[1] == 'ADD':
             # get the product id from the form data and add it to the comparison_product_ids list
@@ -152,29 +177,12 @@ def home(request):
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
 
-    excel_file_path = os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/amazon_product_data.xlsx")
-    excel = pd.read_excel(excel_file_path)
-    #ToDo this does only read the first sheet so use urls file for the range and hash the urls for th sheets
-    try:
-     for sheets in excel:
-            sheet = pd.read_excel(excel_file_path, sheet_name=sheets)
-            product = {
-            "id": sheets,
-            "name": sheet["product"][0],
-            "description": "placeholder",
-            "price": sheet["price"][len(sheet["price"]) - 1],
-            }
-            mock_products.append(product)
-    except Exception as e:
-        print("excel is empty")
-
-    # TODO - Implement the getProducts function to fetch products from a data source (API, database, etc.).
     # products that are not compared
     product_not_selected = []
     # products = getProducts()
     # get the products that the user wants to compare
     products_to_compare = []
-    for product in mock_products:
+    for product in products:
         if not to_many_compared_products:
             for product_id in comparison_product_ids:
                 if product['id'] == product_id:
@@ -191,16 +199,14 @@ def home(request):
     # set page context
     context = {
         "products_not_selected": product_not_selected,
-        "products": mock_products,
+        "products": products,
         "compared_products": products_to_compare,
         "to_many_compared_products": to_many_compared_products,
         # "cmp_form": cmp_form, # the add_cmp_form for adding a product to the compare list // the remove_cmp_form for removing a product
     }
     return render(request, "home.html", context)
 
-
-# TODO - Finish the dashboard page
-def dashboard(request, product_id):
+def dashboard(request, product_id: str):
     """
     Entrypoint for the dashboard page.
 
@@ -213,11 +219,12 @@ def dashboard(request, product_id):
     mock_product = {
         "id": 4,
         "name": "Product 4",
-        "description": "Some Product 4 lorem ipsum dolor sit amet consectetur adip  proident et",
+        "description": "Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
         "price": 345.99,
         "date": "2015-01-01T00:00:00"
     }
-    
+    product = mock_product
+
     # TODO - Also add here the product plot chart string function
-    context = {"product": mock_product, "prod_plot_string": ""}
+    context = {"product": product, "prod_plot_string": ""}
     return render(request, "dashboard.html", context)
