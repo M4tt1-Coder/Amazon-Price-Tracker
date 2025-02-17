@@ -1,5 +1,5 @@
 # Amazon-Price-Tracker
-A exam project for "Programmieren in Python". It shows the prices and its development of a specific product.
+An exam project for "Programmieren in Python". It shows the price and its development of a specific product.
 
 ## Setup
 
@@ -238,6 +238,12 @@ Also, take a look at the the [TailwindCSS documentation](https://tailwindcss.com
 
 Please refer to the docs for more information about running the Django server [`here`](https://docs.djangoproject.com/en/5.1/intro/tutorial01/)
 
+First you need to migrate changes to your local development **SQLite** database to use [`Django Sessions`](https://docs.djangoproject.com/en/5.1/topics/http/sessions/) stored in a database.
+
+```bash
+  python manage.py migrate
+```
+
 To start the server, go the "Amazon-Price-Tracker" folder, open a terminal and type:
 ```bash
   python manage.py runserver
@@ -273,6 +279,14 @@ Now, to lint all Django Template files in the project, use the following command
 
 Also, open the `package.json` file to look at the corresponding script command!
 
+### Installing all Dependencies in your virtual environment
+
+To install all needed dependencies in your virtual environment, enter this command in a terminal in the **`Amazon-Price-Tracker`** - folder:
+
+```bash
+  pip install -r requirements.txt
+```
+
 ### Update all dependencies in virtual environment
 
 After some time, you need to update all dependencies in your virtual environment!
@@ -295,3 +309,4 @@ Enter this command, after you activated your virtual environment:
   - get product utility function (sascha)
 - API endpoints for fetching data from an Amazon API (Simon)
 - delete product (Max) -> store data in exel file
+(Thomas hat Duenschiss)
