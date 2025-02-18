@@ -83,13 +83,14 @@
                             </span>
                             <form action="{% url 'create' %}" method="post">
                                 {% csrf_token %}
-                            <button type="submit"
-                                   name="delete_product"
-                                   value="{{item.url}}"
-                                    onclick="attention()"
-                                   class="w-1/2 p-2 border rounded-lg text-center cursor-pointer">
-                                delete </button>
-                        </form>
+                                <button type="submit"
+                                        name="delete_product"
+                                        value="{{ item.url }}"
+                                        onclick="attention()"
+                                        class="w-fit p-2 border-2 bg-white text-black font-sans font-medium text-lg rounded-lg text-center cursor-pointer transition-all duration-500 hover:bg-black hover:border-white hover:text-white">
+                                    Delete
+                                </button>
+                            </form>
                         </li>
                     {% endfor %}
                 </ul>
