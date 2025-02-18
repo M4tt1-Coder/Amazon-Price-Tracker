@@ -19,7 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
+# Define all registered views and url patterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('amazon_price_tracker_app.urls')),

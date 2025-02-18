@@ -1,3 +1,4 @@
+{% comment %} Layout Template with footer & header {% endcomment %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +20,6 @@
         {% block header_scripts %}
         {% endblock header_scripts %}
         {% include "head/css.html" %}
-        {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  rel="stylesheet" /> {% endcomment %}
     </head>
     <body class="max-h-[100vh] max-w-[100vw]">
         <header class="h-20 w-full bg-slate-300 sm:flex sm:items-center sm:justify-center border-b-4 border-b-black overflow-x-scroll p-2 mb-3.5">
@@ -39,7 +39,6 @@
                                 class="p-2 text-xl font-sans ring-[2.5px] ring-black rounded-lg bg-white hover:ring-slate-300 hover:bg-black hover:text-white hover:scale-110 transition-all duration-700">
                             <a href="{% url 'home' %}">Home</a>
                         </button>
-                        {% comment %} <a href="{% url 'dashboard' %}">About</a> {% endcomment %}
                         {% comment %} GitHub Profile {% endcomment %}
                         <button type="button"
                                 class="p-2 text-xl font-sans ring-[2.5px] ring-black rounded-lg bg-white hover:ring-slate-300 hover:bg-black hover:text-white hover:scale-110 transition-all duration-700">

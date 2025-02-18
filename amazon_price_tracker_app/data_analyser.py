@@ -2,20 +2,6 @@ import openpyxl
 import pandas as pd
 from .get_productdata import get_data_np
 import os
-#import hashlib
-#from random import random
-#from datetime import datetime
-
-
-# test function
-#def get_data_np():
-    #price = round(random() * 100, 2)
-    #date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    #name = f"Product_{int(random() * 3)}"
-    #description = "This is a vivid product description"
-    #id = f"ID_{hashlib.sha256(name.encode()).hexdigest()[:7]}"
-
-    #return price, date, name, description, id
 
 def receive_data_np(url,file):
     # receive 5 return values from 'get_data_np()'

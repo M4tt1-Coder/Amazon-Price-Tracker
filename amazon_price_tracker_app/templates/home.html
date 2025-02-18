@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% comment %} Landing page - lists all products fetched and stored {% endcomment %}
 {% block title %}
     Home Page
 {% endblock title %}
@@ -82,7 +83,6 @@
                                   action="{% url 'home' %}"
                                   class="col-span-1 row-span-1 flex items-center justify-between">
                                 {% csrf_token %}
-                                {% comment %} {{ cmp_form }} {% endcomment %}
                                 {% comment %} product name  {% endcomment %}
                                 <p class="w-full text-xl font-medium font-sans hover:translate-x-1 hover:tracking-wider origin-center transition-all duration-500">
                                     {{ p.product.name }}
@@ -147,7 +147,6 @@
                                   method="post"
                                   class="w-full max-w-[550px] h-fit p-2 flex items-center justify-between rounded-xl bg-slate-200 transition-all duration-500 hover:bg-slate-300">
                                 {% csrf_token %}
-                                {% comment %} {{ cmp_form }} {% endcomment %}
                                 {% comment %} product name {% endcomment %}
                                 <div class="flex items-center justify-center">
                                     <p class="w-full text-center text-xl font-sans font-medium">{{ product.name }}</p>
