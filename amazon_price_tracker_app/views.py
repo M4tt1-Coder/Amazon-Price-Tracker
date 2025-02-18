@@ -83,8 +83,7 @@ def create(request):
         if form.is_valid():
             url = form.cleaned_data["user_input"]
             if url[:len(expected)] == expected:  # checks if the input starts with the correct url for our API
-                price, date, product, describtion, id = get_data_np(url)
-                hash = f"ID_{hashlib.sha256(product.encode()).hexdigest()[:7]}"
+                price, date, product, description, id = get_data_np(url)
                 if request.POST.get("submit") == "submit":#if "add" button is clicked open the txt in append mode and write the url in
                     with open(data_file_path, "a") as file:
                         file.write(url + "\n")
@@ -97,7 +96,7 @@ def create(request):
                         for line in lines:
                             if line.strip("\n") != url:
                                 write.write(line)
-                    delete_excel_sheet(excel_file_path,hash)
+                    delete_excel_sheet(excel_file_path,id)
                     return redirect("create")
             else:
                 flag=True #sets a flag that we then can use to trigger a response in the template
@@ -105,10 +104,28 @@ def create(request):
                     flag=False
                     return redirect("create") #resets the page
 
+
     else:
         form = urlform()
-
-    return render(request, "create.html", {"form": form, "products": data,"flag":flag})
+    # butten next to the list that lets you delete products instantly
+    if request.method == "POST" and "delete_product" in request.POST:
+        value=request.POST.get("delete_product")
+        value=value.strip()#nexessary cause django adds a whitespace after the link which leads to a different id etc.
+        id1 = f"ID_{hashlib.sha256(value.encode()).hexdigest()[:7]}"
+        print("...")
+        print(value,"----------------------------------")
+        with open(data_file_path, "r") as file:
+            lines = file.readlines()
+        print(lines)
+        with open(data_file_path, "w") as write:
+            for line in lines:
+                if line.strip() != value:
+                    #print(line.strip("\n"))
+                    write.write(line)
+        print("test")
+        delete_excel_sheet(excel_file_path,id1)
+        return redirect("create")
+    return render(request, "create.html", {"form": form, "products": data, "flag": flag})
 
 
 # our home page
