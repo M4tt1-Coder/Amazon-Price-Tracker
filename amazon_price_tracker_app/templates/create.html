@@ -62,7 +62,7 @@
         {% endif %}
         <div class="display w-full rounded">
             <p class="text-black text-center font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">
-                Your Product URLs (click to copy links):
+                Your Products (click to copy URLs):
             </p>
             <div class="flex flex-col w-full">
                 <ul class="w-full">
@@ -81,6 +81,15 @@
                                        class="w-1/2 p-2 border rounded-lg text-center cursor-pointer"
                                        onclick="CopyText(id)">
                             </span>
+                            <form action="{% url 'create' %}" method="post">
+                                {% csrf_token %}
+                            <button type="submit"
+                                   name="delete_product"
+                                   value="{{item.url}}"
+                                    onclick="attention()"
+                                   class="w-1/2 p-2 border rounded-lg text-center cursor-pointer">
+                                delete </button>
+                        </form>
                         </li>
                     {% endfor %}
                 </ul>
