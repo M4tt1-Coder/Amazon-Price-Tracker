@@ -112,17 +112,17 @@ def create(request):
         value=request.POST.get("delete_product")
         value=value.strip()#nexessary cause django adds a whitespace after the link which leads to a different id etc.
         id1 = f"ID_{hashlib.sha256(value.encode()).hexdigest()[:7]}"
-        print("...")
-        print(value,"----------------------------------")
-        with open(data_file_path, "r") as file:
+        #print("...")
+        #print(value,"----------------------------------")
+        with open(data_file_path, "r") as file:#usual delete functionality
             lines = file.readlines()
-        print(lines)
+        #print(lines)
         with open(data_file_path, "w") as write:
             for line in lines:
                 if line.strip() != value:
                     #print(line.strip("\n"))
                     write.write(line)
-        print("test")
+        #print("test")
         delete_excel_sheet(excel_file_path,id1)
         return redirect("create")
     return render(request, "create.html", {"form": form, "products": data, "flag": flag})
