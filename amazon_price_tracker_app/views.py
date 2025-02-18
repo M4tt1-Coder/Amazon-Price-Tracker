@@ -89,6 +89,7 @@ def create(request):
                         file.write(url + "\n")
                     receive_data_np(url, excel_file_path)
                     return redirect("create")  # update site to show new list
+                # TODO - Deleting one product does not work
                 elif request.POST.get("submit") == "delete":#if "delete" button is clicked delete the line
                     with open(data_file_path, "r") as file:
                         lines = file.readlines()
