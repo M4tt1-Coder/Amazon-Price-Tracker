@@ -54,8 +54,6 @@ def create(request):
                 if request.method == "POST" and "go_back" in request.POST:#checks if user has clicked the back butten
                     flag=False
                     return redirect("create") #resets the page
-
-
     else:
         form = urlform()
     # butten next to the list that lets you delete products instantly
@@ -101,7 +99,6 @@ def home(request):
         comparison_product_ids = request.session["compared_products_ids"]
     else: # ... or create a new session
         request.session["compared_products_ids"] = []
-    
     # when a POST request is made
     if request.method == "POST":
         # delete all the products
@@ -138,8 +135,6 @@ def home(request):
                         comparison_product_ids.append(id)
                 request.session["compared_products_ids"] = comparison_product_ids
         return redirect("home")  # update site to show new comparison list
-    
-
     # check if more than 3 products have been compared
     # it is not allowed to compare more than 3 products
     to_many_compared_products = len(comparison_product_ids) > 3
@@ -160,16 +155,13 @@ def home(request):
         else:
             request.session['compared_products_ids'] = []
             return redirect('home')
-    
     # get the price development charts
-    
     # set page context
     context = {
         "products_not_selected": product_not_selected,
         "products": products,
         "compared_products": products_to_compare,
         "to_many_compared_products": to_many_compared_products,
-        # "cmp_form": cmp_form, # the add_cmp_form for adding a product to the compare list // the remove_cmp_form for removing a product
     }
     return render(request, "home.html", context)
 
