@@ -1,39 +1,38 @@
 {% extends "base.html" %}
 {% block title %}
- Dasboard
+      Dashboard
 {% endblock title %}
 {% block content %}
- <div class="w-full h-full flex items-center justify-center">
-  <div class="h-5/6 w-2/3 bg-slate-200 rounded-xl grid grid-cols-1 grid-rows-5 p-3">
-   {% comment %} product name {% endcomment %}
-   <div class="h-full w-full row-span-1 col-span-1 flex items-center justify-center px-4 overflow-x-scroll">
-    <p class="text-center font-sans text-4xl font-semibold transition-all duration-500 hover:tracking-wider hover:scale-110">
-     {{ product.name }}
-    </p>
-   </div>
-   {% comment %} product creation date and description {% endcomment %}
-   <div class="h-full w-full row-span-1 col-span-1 grid grid-rows-1 grid-cols-2">
-    {% comment %} description {% endcomment %}
-    <div class="col-span-1 h-full w-full flex items-center justify-center">
-     <div class="h-full w-3/4 flex flex-col items-start justify-start">
-      <p class="text-center font-sans text-2xl font-semibold">Description:</p>
-      <p class="text-left font-sans text-xl font-medium">{{ product.description }}</p>
-     </div>
-    </div>
-    {% comment %} date {% endcomment %}
-    <div class="col-span-1 flex items-center justify-center">
-     <p class="text-center font-sans text-2xl font-semibold">Created at: {{ product.date }}</p>
-    </div>
-   </div>
-   {% comment %} price development chart {% endcomment %}
-   <!-- TODO - Add the matplotlib price chart of a product in the dashboard -->
-   <div class="h-full w-full row-span-3 col-span-1 p-2">
-    <img src="data:image/png;base64,{{ prod_plot_string }}"
-         alt="{{ product.name }}"
-         class="w-full h-full rounded-xl"
-         height=""
-         width="">
-   </div>
-  </div>
- </div>
+      <div class="w-full h-full flex items-center justify-center">
+            <div class="h-5/6 w-2/3 bg-slate-200 rounded-xl grid grid-cols-1 grid-rows-5 gap-2 p-3">
+                  {% comment %} product name {% endcomment %}
+                  <div class="h-full w-full row-span-1 col-span-1 flex items-center justify-center px-4 overflow-x-scroll">
+                        <p class="text-center font-sans text-4xl font-semibold transition-all duration-500 hover:tracking-wider hover:scale-110">
+                              {{ product.name }}
+                        </p>
+                  </div>
+                  {% comment %} product creation date and description {% endcomment %}
+                  <div class="h-full w-full row-span-1 col-span-1 grid grid-rows-1 grid-cols-2">
+                        {% comment %} description {% endcomment %}
+                        <div class="col-span-1 h-full w-full flex items-center justify-center">
+                              <div class="h-full w-3/4 flex flex-col items-start justify-start p-2 overflow-y-scroll">
+                                    <p class="text-center font-sans text-2xl font-semibold">Description:</p>
+                                    <p class="text-left font-sans text-xl font-medium">{{ product.description }}</p>
+                              </div>
+                        </div>
+                        {% comment %} date {% endcomment %}
+                        <div class="col-span-1 flex items-center justify-center">
+                              <p class="text-center font-sans text-2xl font-semibold">Created at: {{ product.date }}</p>
+                        </div>
+                  </div>
+                  {% comment %} price development chart {% endcomment %}
+                  <div class="h-full w-full row-span-3 col-span-1 p-3">
+                        <img src="data:image/png;base64,{{ prod_plot_string }}"
+                             alt="{{ product.name }}"
+                             class="w-full h-full rounded-xl"
+                             height=""
+                             width="">
+                  </div>
+            </div>
+      </div>
 {% endblock content %}

@@ -10,13 +10,24 @@
     <div class="w-full h-full grid grid-rows-1 grid-cols-2">
         {% comment %} list content {% endcomment %}
         <div class="col-span-1 h-full w-full flex items-center justify-center px-7">
-            <div class="w-full h-full grid grid-cols-1 grid-rows-7 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all duration-500 p-3">
+            <div class="w-full h-full grid grid-cols-1 grid-rows-8 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all duration-500 p-3">
                 {% comment %} list title {% endcomment %}
                 <div class="col-span-1 row-span-1 w-full h-full flex items-center justify-center">
                     <p class="w-full text-3xl font-medium font-sans text-center hover:scale-110 hover:font-semibold transition-all duration-500">
                         Products
                     </p>
                 </div>
+                {% comment %} delete all products {% endcomment %}
+                <form method="post"
+                      action="{% url 'home' %}"
+                      class="col-span-1 row-span-1 w-full h-full flex items-center justify-center">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="text-white font-semibold text-xl bg-black py-2 px-2 rounded-lg hover:bg-white hover:text-black hover:border-2 hover:scale-105 transition-all duration-500">
+                        Delete All Products
+                    </button>
+                    <input type="hidden" value="DELETE_ALL" name="action_operation" />
+                </form>
                 {% comment %} list of rendered products {% endcomment %}
                 <div class="row-span-6 col-span-1 overflow-y-scroll flex flex-col item-center justify-center gap-3">
                     {% for product in products %}
@@ -65,7 +76,6 @@
                 </div>
                 <div class="h-full w-full row-span-6 col-span-1 grid grid-cols-1 grid-rows-3 px-2 gap-3">
                     {% for p in compared_products %}
-                        <!-- TODO - Included the loaded diagrams into the homepage -> https://spapas.github.io/2021/02/08/django-matplotlib/-->
                         <div class="col-span-1 row-span-1 w-full h-full grid grid-cols-1 grid-rows-4 gap-3 p-2 rounded-xl bg-slate-300 ring-">
                             {% comment %} Product name and 'unselect' button {% endcomment %}
                             <form method="post"

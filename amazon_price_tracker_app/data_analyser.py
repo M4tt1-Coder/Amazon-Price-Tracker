@@ -74,7 +74,6 @@ def delete_excel_sheet(file, sheet_name):
         print(f"Deleted sheet '{sheet_name}' from '{file}'.")
 
 def delete_all_products(file):
-
     if os.path.exists(file):
         os.remove(file)
         print(f"Removed file '{file}'.")
