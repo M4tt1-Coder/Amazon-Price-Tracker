@@ -1,6 +1,6 @@
 import hashlib
 
-from amazon_price_tracker_app.utils import get_all_products, get_product_by_id
+from .utils import get_all_products, get_product_by_id
 from .get_productdata import get_data_np
 from .data_analyser import delete_all_products, receive_data_np, delete_excel_sheet
 from django.shortcuts import render, redirect
