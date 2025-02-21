@@ -1,8 +1,6 @@
 import requests
 import bs4 as bs
-import lxml
 import numpy as np
-import pandas as pd
 from datetime import datetime
 import json
 import hashlib
