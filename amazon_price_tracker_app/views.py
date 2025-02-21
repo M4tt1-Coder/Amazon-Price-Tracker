@@ -1,10 +1,9 @@
 import hashlib
-
+from amazon_price_tracker_app.plot_generator import plot_product_price
 from amazon_price_tracker_app.utils import get_all_products, get_product_by_id
 from .get_productdata import get_data_np
 from .data_analyser import delete_all_products, receive_data_np, delete_excel_sheet
 from django.shortcuts import render, redirect
-
 from .forms import urlform
 import os
 from django.conf import settings
@@ -135,9 +134,9 @@ def home(request):
                         comparison_product_ids.append(id)
                 request.session["compared_products_ids"] = comparison_product_ids
         return redirect("home")  # update site to show new comparison list
-    # check if more than 3 products have been compared
-    # it is not allowed to compare more than 3 products
-    to_many_compared_products = len(comparison_product_ids) > 3
+    # check if more than 2 products have been compared
+    # it is not allowed to compare more than 2 products
+    to_many_compared_products = len(comparison_product_ids) > 2
 
     # products that are not compared
     product_not_selected = []
@@ -148,8 +147,7 @@ def home(request):
         if not to_many_compared_products:
             for product_id in comparison_product_ids:
                 if product['id'] == product_id:
-                    # TODO - Fetch the price development chart string for this product
-                    products_to_compare.append({"product": product, "chart_string": ""})
+                    products_to_compare.append({"product": product, "chart_string": plot_product_price(products, product_id)})
             if product['id'] not in comparison_product_ids:
                 product_not_selected.append(product)   
         else:
@@ -174,6 +172,5 @@ def dashboard(request, product_id: str):
         product_id: The ID of the product to be included in the dashboard.
     """
     product = get_product_by_id(product_id)
-    # TODO - Also add here the product plot chart string function
-    context = {"product": product, "prod_plot_string": ""}
+    context = {"product": product, "prod_plot_string": plot_product_price(get_all_products(), product_id)}
     return render(request, "dashboard.html", context)

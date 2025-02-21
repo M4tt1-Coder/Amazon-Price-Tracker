@@ -3,6 +3,8 @@ An exam project for "Programmieren in Python". It shows the price and its develo
 
 ## Setup
 
+The application is meant for a **desktop screen**, not for a tablet / mobile device. Future approaches could be to implemented the responsibilty of the HMTL elements.
+
 ### Django
 
 You need to setup a virtual enviroment for the developing with Python and Django.

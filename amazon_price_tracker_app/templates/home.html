@@ -56,6 +56,7 @@
                 </div>
             </div>
         </div>
+        <!-- TODO - Rework the format of the container so that the charts can be big enough -->
         {% comment %} comparison container {% endcomment %}
         <div class="col-span-1 h-full w-full flex items-center justify-center px-7 relative">
             <div class="w-full h-full grid grid-cols-1 grid-rows-7 bg-slate-100 rounded-xl hover:bg-slate-200 transition-all duration-500 p-3">
@@ -75,9 +76,9 @@
                                 onclick="toggleCmpPopover()">Select</button>
                     </div>
                 </div>
-                <div class="h-full w-full row-span-6 col-span-1 grid grid-cols-1 grid-rows-3 px-2 gap-3">
+                <div class="h-full w-full row-span-6 col-span-1 grid grid-cols-1 grid-rows-2 px-2 gap-3">
                     {% for p in compared_products %}
-                        <div class="col-span-1 row-span-1 w-full h-full grid grid-cols-1 grid-rows-4 gap-3 p-2 rounded-xl bg-slate-300 ring-">
+                        <div class="col-span-1 row-span-1 w-full h-full grid grid-cols-1 grid-rows-5 gap-3 p-2 rounded-xl bg-slate-300 ring-">
                             {% comment %} Product name and 'unselect' button {% endcomment %}
                             <form method="post"
                                   action="{% url 'home' %}"
@@ -103,10 +104,10 @@
                                        name="action_operation" />
                             </form>
                             {% comment %} product price chart {% endcomment %}
-                            <div class="col-span-1 row-span-3 w-full h-full">
+                            <div class="col-span-1 row-span-4 w-full h-full flex items-center justify-center">
                                 <img src="data:image/png;base64,{{ p.chart_string }}"
                                      alt="{{ p.product.name }}"
-                                     class="w-full h-full rounded-xl aspect-video"
+                                     class="aspect-[10/5] h-full rounded-xl"
                                      height=""
                                      width="">
                             </div>
