@@ -24,6 +24,9 @@ def plot_product_price(products, product_id):
     plt.switch_backend("AGG")
     plt.figure(figsize=(10, 5))
     plt.plot(dates, prices, linestyle='dashed',marker='o', color='r', label="Vorhersage")
+    current_values = plt.gca().get_yticks()
+    # all float values should have 2 digits in precision
+    plt.gca().set_yticklabels(['{:.2f}'.format(x) for x in current_values])
     plt.xlabel('Date')
     plt.ylabel('Price')
     plt.xticks(rotation=45)

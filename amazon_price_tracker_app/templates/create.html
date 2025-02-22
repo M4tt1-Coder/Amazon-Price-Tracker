@@ -60,10 +60,12 @@
                 </form>
             </div>
         {% endif %}
-        <div class="display w-full rounded">
-            <p class="text-black text-center font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">
-                Your Products (click to copy URLs):
-            </p>
+        <div class="w-full rounded">
+            <div class="w-full flex items-center justify-center pb-2">
+                <p class="text-black font-bold text-2xl hover:scale-110 hover:font-semibold transition-all duration-500">
+                    Your Products (click to copy URLs):
+                </p>
+            </div>
             <div class="flex flex-col w-full">
                 <ul class="w-full">
                     {% for item in products %}
