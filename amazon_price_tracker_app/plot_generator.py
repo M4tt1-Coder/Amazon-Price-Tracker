@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import io
 import urllib
 import base64
-from amazon_price_tracker_app.utils import generate_price_predictions
+from .utils import generate_price_predictions
 
 plt.style.use("fivethirtyeight")
 
