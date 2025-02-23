@@ -27,8 +27,8 @@ def get_product_by_id(id):
                 "id": id,
                 "name": sheet["name"][0],
                 "description": sheet.get("description", ["No description"])[0],
-                "price": sheet["price"].iloc[-1],
-                "date": sheet["date"][0]
+                "price": sheet["price"],
+                "date": sheet["date"]
             }    
             return product
         else:
@@ -65,7 +65,7 @@ def get_all_products() -> list:
         print(f"Error reading Excel file: {str(e)}")
         return []
     
-def generate_price_predictions(initial_date: str, initial_price: float):
+def generate_price_predictions(initial_date: str, initial_price: float, prices_list, dates_list):
     """
     Uses a model to generate price predictions for the given date and price.
     
@@ -74,18 +74,30 @@ def generate_price_predictions(initial_date: str, initial_price: float):
     Args:
         initial_date (str): The starting date of the initial price
         initial_price (float): Starting price
+        prices_list: list of historic prices
+        dates_list: list of historical dates
 
     Returns:
         list: Dates for the predictions, and corresponding predicted prices
     """
-    # Generate past 2 months (approximately 60 days) of data for training the model
+    # Generate past 2 months (approximately 60 days) of data for training the model if no data is available
     past_days = 60
     start_date = datetime.strptime(initial_date, "%d/%m/%Y")
-    dates = [start_date - timedelta(days=i) for i in range(past_days)]
-    dates.reverse()  # Ensure dates are in chronological order
+    dates_pred = [start_date - timedelta(days=i) for i in range(past_days)]
+    dates_pred.reverse()  # Ensure dates are in chronological order
 
-    # Generate example trend data (this can be replaced with actual historical data if available)
-    prices = [initial_price * (1 + 0.01 * np.sin(2 * np.pi * i / 30)) for i in range(past_days)]
+    # Generate example trend data
+    prices_pred = [initial_price * (1 + 0.01 * np.sin(2 * np.pi * i / 30)) for i in range(past_days)]
+    #checks if there is a sufficient amount of historical data (if not uses the generated data from above)
+    if(len(prices_list)<=1):
+        prices=prices_pred
+        dates=dates_pred
+    else:
+        dates=[]
+        for i in range(len(dates_list)):
+            dates.append(datetime.strptime(dates_list[i], "%d/%m/%Y"))
+        prices=prices_list
+        print(dates, prices)
 
     # Prepare the data for the model
     df = pd.DataFrame({'date': dates, 'price': prices})

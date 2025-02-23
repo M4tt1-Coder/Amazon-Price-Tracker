@@ -1,8 +1,8 @@
 import hashlib
-from amazon_price_tracker_app.plot_generator import plot_product_price
-from amazon_price_tracker_app.utils import get_all_products, get_product_by_id
+from .utils import get_all_products, get_product_by_id
 from .get_productdata import get_data_np
 from .data_analyser import delete_all_products, receive_data_np, delete_excel_sheet
+from .plot_generator import plot_product_price
 from django.shortcuts import render, redirect
 from .forms import urlform
 import os
@@ -78,6 +78,12 @@ def create(request):
 
 # our home page
 def home(request):
+    #updates the tracker with the newest price
+    #gets all current products
+    products = get_all_products()
+    for lines in open(os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"),"r"):
+        receive_data_np(lines.strip(),os.path.join(settings.BASE_DIR, 'amazon_price_tracker_app/data/amazon_product_data.xlsx'))
+
     """
     Manages the home page where all products can be deleted.
 
@@ -89,7 +95,7 @@ def home(request):
     Returns:
         Context and UI data that is displayed in the viewport
     """
-    # get all current products
+    # get all current products with the update
     products = get_all_products()
     # Set a empty list of product ids
     comparison_product_ids = []
@@ -171,6 +177,13 @@ def dashboard(request, product_id: str):
         request: The HTTP request object.
         product_id: The ID of the product to be included in the dashboard.
     """
-    product = get_product_by_id(product_id)
-    context = {"product": product, "prod_plot_string": plot_product_price(get_all_products(), product_id)}
+    product_initial = get_product_by_id(product_id)
+    product = {
+        "id": id,
+        "name": product_initial["name"],
+        "description": product_initial["description"],
+        "price": product_initial["price"][0],
+        "date": product_initial["date"][0],
+    }
+    context = {"product": product, "prod_plot_string": plot_product_price(get_product_by_id(product_id), product_id)}
     return render(request, "dashboard.html", context)
