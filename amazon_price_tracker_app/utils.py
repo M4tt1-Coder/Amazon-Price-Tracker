@@ -86,8 +86,9 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
     dates_pred = [start_date - timedelta(days=i) for i in range(past_days)]
     dates_pred.reverse()  # Ensure dates are in chronological order
 
-    # Generate example trend data (uses historical data if available)
+    # Generate example trend data
     prices_pred = [initial_price * (1 + 0.01 * np.sin(2 * np.pi * i / 30)) for i in range(past_days)]
+    #checks if there is a sufficient amount of historical data (if not uses the generated data from above)
     if(len(prices_list)<=2):
         prices=prices_pred
         dates=dates_pred
