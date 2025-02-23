@@ -3,6 +3,7 @@ import hashlib
 from .utils import get_all_products, get_product_by_id
 from .get_productdata import get_data_np
 from .data_analyser import delete_all_products, receive_data_np, delete_excel_sheet
+from .plot_generator import plot_product_price
 from django.shortcuts import render, redirect
 from .forms import urlform
 import os
@@ -171,6 +172,13 @@ def dashboard(request, product_id: str):
         request: The HTTP request object.
         product_id: The ID of the product to be included in the dashboard.
     """
-    product = get_product_by_id(product_id)
-    context = {"product": product, "prod_plot_string": plot_product_price(get_all_products(), product_id)}
+    product_initial = get_product_by_id(product_id)
+    product = {
+        "id": id,
+        "name": product_initial["name"],
+        "description": product_initial["description"],
+        "price": product_initial["price"][0],
+        "date": product_initial["date"][0],
+    }
+    context = {"product": product, "prod_plot_string": plot_product_price(get_product_by_id(product_id), product_id)}
     return render(request, "dashboard.html", context)

@@ -13,14 +13,8 @@ def plot_product_price(products, product_id):
     Args:
         products (list): List of all products
     """
-    product = next((p for p in products if p["id"] == product_id), None) # 
-
-    if not product:
-        print(f"Produkt '{product_id}' nicht gefunden!")
-        return
-
     # Vorhersage berechnen mit externer Funktion (aus prediction_model_polynomial.py)
-    dates, prices = generate_price_predictions(product["date"], product["price"])
+    dates, prices = generate_price_predictions(products["date"][len(products["date"])-1], products["price"][len(products["price"])-1],products["price"],products["date"])
     plt.switch_backend("AGG")
     plt.figure(figsize=(10, 5))
     plt.plot(dates, prices, linestyle='dashed',marker='o', color='r', label="Vorhersage")
