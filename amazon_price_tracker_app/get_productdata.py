@@ -1,8 +1,6 @@
 import requests
 import bs4 as bs
-import lxml
 import numpy as np
-import pandas as pd
 from datetime import datetime
 import json
 import hashlib
@@ -23,9 +21,17 @@ def get_data_np(Url):
 
     return price,date,name,description,id
 
-#this function uses proxies, maby usefull if scraping normally is not functioning.
-#But amazon does sometimes recognize these proxies to be malicious so try to use the other function first
+
 def get_date_wp(Url):
+    """
+    This function uses proxies, maby usefull if scraping normally is not functioning.
+    But amazon does sometimes recognize these proxies to be malicious so try to use the other function first
+
+    [ Unused ]
+
+    Args:
+        Url (str): URL from the API endpoint to fetch from.
+    """
     proxy_list = []
     for line in open("../get_productdata_function/proxies.txt", "r"):
         proxy_list.append(line.strip())

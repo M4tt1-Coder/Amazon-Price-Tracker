@@ -16,6 +16,7 @@ EditorConfig==0.17.0
 et_xmlfile==2.0.0
 fonttools==4.56.0
 idna==3.10
+joblib==1.4.2
 jsbeautifier==1.15.3
 json5==0.10.0
 kiwisolver==1.4.8
@@ -33,9 +34,12 @@ pytz==2025.1
 PyYAML==6.0.2
 regex==2024.11.6
 requests==2.32.3
+scikit-learn==1.6.1
+scipy==1.15.2
 six==1.17.0
 soupsieve==2.6
 sqlparse==0.5.3
+threadpoolctl==3.5.0
 tqdm==4.67.1
 typing_extensions==4.12.2
 tzdata==2025.1
