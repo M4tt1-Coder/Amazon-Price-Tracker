@@ -7,8 +7,6 @@ from django.shortcuts import render, redirect
 from .forms import urlform
 import os
 from django.conf import settings
-import random
-import requests
 
 # Create your views here.
 
@@ -86,18 +84,6 @@ def home(request):
     for lines in open(os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"),"r"):
         receive_data_np(lines.strip(),os.path.join(settings.BASE_DIR, 'amazon_price_tracker_app/data/amazon_product_data.xlsx'))
 
-    """
-    The next part is for testing only, it changes the price of all products randomly after every update
-    
-
-    """
-    ran=random.randint(-15,15)
-    for lines in open(os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"),"r"):
-        price, date, product, description, id = get_data_np(lines)
-        json={
-            "price":price+ran
-        }
-        requests.put(lines,json)
     """
     Manages the home page where all products can be deleted.
 
