@@ -89,8 +89,12 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
 
     # Generate example trend data
     prices_pred = [initial_price * (1 + 0.01 * np.sin(2 * np.pi * i / 30)) for i in range(past_days)]
+    #checks if the list contains to many equal values by comparing a set to the normal list
+    to_many_duplicates=False
+    if len(set(prices_list))+3 <  len(prices_list) or len(set(dates_list)) < len(dates_list):
+        to_many_duplicates=True
     #checks if there is a sufficient amount of historical data (if not uses the generated data from above)
-    if(len(prices_list)<=1):
+    if(len(prices_list)<=1 or to_many_duplicates):
         prices=prices_pred
         dates=dates_pred
     else:
@@ -98,7 +102,7 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
         for i in range(len(dates_list)):
             dates.append(datetime.strptime(dates_list[i], "%d/%m/%Y"))
         prices=prices_list
-
+    print(prices)
     # Prepare the data for the model
     df = pd.DataFrame({'date': dates, 'price': prices})
     df['day'] = df['date'].apply(lambda x: (x - start_date).days)
@@ -106,11 +110,12 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
     X = df[['day']]
     y = df['price']
 
-    degree = random.randint(2, 4)  # Choose a polynomial degree between 2 and 4
+    degree = 2 # Choose the polynominal degree as two (anything higher will result in false falues)
     model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
 
     # Fit the model
     model.fit(X, y)
+
 
     # Generate predictions for the next 10 days
     future_dates = [start_date + timedelta(days=i+1) for i in range(10)]
