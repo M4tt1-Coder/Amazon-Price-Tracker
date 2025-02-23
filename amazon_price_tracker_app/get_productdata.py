@@ -18,7 +18,6 @@ def get_data_np(Url):
     else:
         return "An error occurred"
 
-
     return price,date,name,description,id
 
 
