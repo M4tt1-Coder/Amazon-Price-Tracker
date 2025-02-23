@@ -89,7 +89,7 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
     # Generate example trend data
     prices_pred = [initial_price * (1 + 0.01 * np.sin(2 * np.pi * i / 30)) for i in range(past_days)]
     #checks if there is a sufficient amount of historical data (if not uses the generated data from above)
-    if(len(prices_list)<=2):
+    if(len(prices_list)<=1):
         prices=prices_pred
         dates=dates_pred
     else:
@@ -97,6 +97,7 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
         for i in range(len(dates_list)):
             dates.append(datetime.strptime(dates_list[i], "%d/%m/%Y"))
         prices=prices_list
+        print(dates, prices)
 
     # Prepare the data for the model
     df = pd.DataFrame({'date': dates, 'price': prices})
