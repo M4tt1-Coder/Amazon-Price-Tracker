@@ -56,8 +56,8 @@ def get_all_products() -> list:
                 "id": sheet_name,
                 "name": sheet["name"][0],
                 "description": sheet.get("description", ["No description"])[0],
-                "price": sheet["price"].iloc[-1],
-                "date": sheet["date"][0]
+                "price": sheet["price"],
+                "date": sheet["date"]
             }
             all_products.append(product)
         return all_products

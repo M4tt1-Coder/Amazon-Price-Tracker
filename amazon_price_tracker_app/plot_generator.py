@@ -13,8 +13,9 @@ def plot_product_price(products, product_id):
     Args:
         products (list): List of all products
     """
+    print(products)
     # Vorhersage berechnen mit externer Funktion (aus prediction_model_polynomial.py)
-    dates, prices = generate_price_predictions(products["date"][len(products["date"])-1], products["price"][len(products["price"])-1],products["price"],products["date"])
+    dates, prices = generate_price_predictions(products["date"][-1], products["price"][-1],products["price"],products["date"])
     plt.switch_backend("AGG")
     plt.figure(figsize=(10, 5))
     plt.plot(dates, prices, linestyle='dashed',marker='o', color='r', label="Vorhersage")

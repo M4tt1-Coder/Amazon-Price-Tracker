@@ -185,5 +185,5 @@ def dashboard(request, product_id: str):
         "price": product_initial["price"][0],
         "date": product_initial["date"][0],
     }
-    context = {"product": product, "prod_plot_string": plot_product_price(get_product_by_id(product_id), product_id)}
+    context = {"product": product, "prod_plot_string": plot_product_price(get_all_products(), product_id)}
     return render(request, "dashboard.html", context)
