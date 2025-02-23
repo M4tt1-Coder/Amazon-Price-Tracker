@@ -30,6 +30,7 @@ def get_product_by_id(id):
                 "price": sheet["price"],
                 "date": sheet["date"]
             }    
+            
             return product
         else:
             return f"Product with ID {id} was not found."
@@ -97,7 +98,6 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
         for i in range(len(dates_list)):
             dates.append(datetime.strptime(dates_list[i], "%d/%m/%Y"))
         prices=prices_list
-        print(dates, prices)
 
     # Prepare the data for the model
     df = pd.DataFrame({'date': dates, 'price': prices})
@@ -106,14 +106,8 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
     X = df[['day']]
     y = df['price']
 
-    # Randomly choose between linear regression and polynomial regression
-    model_choice = random.choice(['linear', 'polynomial'])
-    
-    if model_choice == 'linear':
-        model = LinearRegression()
-    else:
-        degree = random.randint(2, 4)  # Choose a polynomial degree between 2 and 4
-        model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
+    degree = random.randint(2, 4)  # Choose a polynomial degree between 2 and 4
+    model = make_pipeline(PolynomialFeatures(degree), LinearRegression())
 
     # Fit the model
     model.fit(X, y)

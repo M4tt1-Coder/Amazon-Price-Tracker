@@ -78,12 +78,6 @@ def create(request):
 
 # our home page
 def home(request):
-    #updates the tracker with the newest price
-    #gets all current products
-    products = get_all_products()
-    for lines in open(os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"),"r"):
-        receive_data_np(lines.strip(),os.path.join(settings.BASE_DIR, 'amazon_price_tracker_app/data/amazon_product_data.xlsx'))
-
     """
     Manages the home page where all products can be deleted.
 
@@ -95,6 +89,12 @@ def home(request):
     Returns:
         Context and UI data that is displayed in the viewport
     """
+    #updates the tracker with the newest price
+    #gets all current products
+    products = get_all_products()
+    for lines in open(os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"),"r"):
+        receive_data_np(lines.strip(),os.path.join(settings.BASE_DIR, 'amazon_price_tracker_app/data/amazon_product_data.xlsx'))
+
     # get all current products with the update
     products = get_all_products()
     # Set a empty list of product ids
