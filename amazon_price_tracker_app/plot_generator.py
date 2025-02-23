@@ -21,6 +21,7 @@ def plot_product_price(products, product_id):
         return
     # Vorhersage berechnen mit externer Funktion (aus prediction_model_polynomial.py)
     dates, prices = generate_price_predictions(product["date"][(len(product["date"])-1)], product["price"][(len(product["price"])-1)],product["price"],product["date"])
+    # is for rendering the plot
     plt.switch_backend("AGG")
     plt.figure(figsize=(10, 5))
     plt.plot(dates, prices, linestyle='dashed',marker='o', color='r', label="Vorhersage")

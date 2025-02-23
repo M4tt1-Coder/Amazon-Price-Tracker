@@ -3,7 +3,6 @@ import pandas as pd
 from django.conf import settings 
 from datetime import datetime, timedelta
 from sklearn.pipeline import make_pipeline
-import random
 from sklearn.linear_model import LinearRegression#errechnet einen wert b um den y erhöht wird wenn sich x um 1 erhöht
 from sklearn.preprocessing import PolynomialFeatures
 import numpy as np
@@ -102,7 +101,6 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
         for i in range(len(dates_list)):
             dates.append(datetime.strptime(dates_list[i], "%d/%m/%Y"))
         prices=prices_list
-    print(prices)
     # Prepare the data for the model
     df = pd.DataFrame({'date': dates, 'price': prices})
     df['day'] = df['date'].apply(lambda x: (x - start_date).days)
@@ -115,7 +113,6 @@ def generate_price_predictions(initial_date: str, initial_price: float, prices_l
 
     # Fit the model
     model.fit(X, y)
-
 
     # Generate predictions for the next 10 days
     future_dates = [start_date + timedelta(days=i+1) for i in range(10)]

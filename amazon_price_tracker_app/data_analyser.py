@@ -54,6 +54,7 @@ def delete_excel_sheet(file, sheet_name):
     # if no sheets remain, delete the entire file
     if not wb.sheetnames:
         os.remove(file)
+
         print(f"Deleted last sheet '{sheet_name}' and removed file '{file}'.")
     else:
         wb.save(file)
