@@ -97,7 +97,7 @@ def home(request):
         json={
             "price":price+ran
         }
-        response=requests.put(lines,json)
+        requests.put(lines,json)
     """
     Manages the home page where all products can be deleted.
 
