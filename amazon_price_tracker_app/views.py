@@ -89,12 +89,13 @@ def home(request):
     Returns:
         Context and UI data that is displayed in the viewport
     """
+
+    """ 
     #updates the tracker with the newest price
-    #gets all current products
     products = get_all_products()
     for lines in open(os.path.join(settings.BASE_DIR, "amazon_price_tracker_app/data/urls.txt"),"r"):
         receive_data_np(lines.strip(),os.path.join(settings.BASE_DIR, 'amazon_price_tracker_app/data/amazon_product_data.xlsx'))
-
+    """
     # get all current products with the update
     products = get_all_products()
     # Set a empty list of product ids
@@ -161,6 +162,9 @@ def home(request):
             return redirect('home')
     # get the price development charts
     # set page context
+    for i in range(len(products)):
+        products[i]['price'] = products[i]['price'][len(products[i]["price"])-1]
+        products[i]['date'] = products[i]['date'][len(products[i]["date"])-1]
     context = {
         "products_not_selected": product_not_selected,
         "products": products,
