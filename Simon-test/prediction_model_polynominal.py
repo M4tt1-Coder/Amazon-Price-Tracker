@@ -3,8 +3,8 @@ from sklearn.linear_model import LinearRegression#errechnet einen wert b um den 
 from sklearn.preprocessing import PolynomialFeatures
 import openpyxl
 import numpy as np
-def prediction(x_d,y_d):
 
+def prediction(x_d,y_d):
     x=[]
     y=[]
     x_new=[]
